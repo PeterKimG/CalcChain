@@ -64,31 +64,31 @@ userSchema.path("password").validate(function(v) {
  var user = this; // 3-1
 
  // create user // 3-3
- if(user.isNew){ // 3-2
-  if(!user.passwordConfirmation){
-   user.invalidate("passwordConfirmation", "Password Confirmation is required!");
+ if(user.isNew){
+    if(!user.passwordConfirmation){
+      user.invalidate("passwordConfirmation", "Password Confirmation is required!");
+    }
+    if(!passwordRegex.test(user.password)){
+      user.invalidate("password", passwordRegexErrorMessage);
+    } else if(user.password !== user.passwordConfirmation) {
+      user.invalidate("passwordConfirmation", "Password Confirmation does not matched!");
+    }
   }
-  if(!passwordRegex.test(user.password)){
-      user.invalidate("password", paswordRegexErrorMessage);
-  } else if(user.password !== user.passwordConfirmation) {
-   user.invalidate("passwordConfirmation", "Password Confirmation does not matched!");
-  }
- }
 
  // update user // 3-4
  if(!user.isNew){
-  if(!user.currentPassword){
-   user.invalidate("currentPassword", "Current Password is required!");
-  }
-  if(user.currentPassword && !bcrypt.compareSync(user.currentPassword, user.originalPassword)){
-   user.invalidate("currentPassword", "Current Password is invalid!");
-  }
-  if(user.newPassword && !passwordRegex.test(user.newPassword)){
+    if(!user.currentPassword){
+      user.invalidate("currentPassword", "Current Password is required!");
+    }
+    if(user.currentPassword && !bcrypt.compareSync(user.currentPassword, user.originalPassword)){
+      user.invalidate("currentPassword", "Current Password is invalid!");
+    }
+    if(user.newPassword && !passwordRegex.test(user.newPassword)){
       user.invalidate("newPassword", passwordRegexErrorMessage);
-  } else if(user.newPassword !== user.passwordConfirmation) {
-   user.invalidate("passwordConfirmation", "Password Confirmation does not matched!");
+    } else if(user.newPassword !== user.passwordConfirmation) {
+      user.invalidate("passwordConfirmation", "Password Confirmation does not matched!");
+    }
   }
- }
 });
 
 // hash password // 3

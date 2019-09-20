@@ -74,7 +74,7 @@
       <div class="form-group <%= (errors.privateKey)?'has-error':'' %>">
         <label for="privateKey" class="col-sm-3 control-label">privateKey</label>
         <div class="col-sm-9">
-         <input class="form-control" type="password" id="privateKey" name="privateKey" value="<%= user.privateKey %>">
+         <input class="form-control" type="password" id="privateKey" name="privateKey" value="">
          <% if(errors.passwordConfirmation){ %>
           <span class="help-block"><%= errors.passwordConfirmation.message %></span>
          <% } %>
