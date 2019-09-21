@@ -36,10 +36,10 @@ app.use(session({secret:"myopinion", resave: true, saveUninitialized: true}))
 app.use(passport.initialize());
 app.use(passport.session());
 
-//custom middlewares
+//custom middlewares - req.local contains below two things, params can be used to ejs
 app.use(function(req, res, next){ 
-  res.locals.isAuthenticated = req.isAuthenticated();
-  res.locals.currentUser = req.user;
+  res.locals.isAuthenticated = req.isAuthenticated(); // login chech; ture and false
+  res.locals.currentUser = req.user; // pull user information
   next();
 })
 

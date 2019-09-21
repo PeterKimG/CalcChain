@@ -29,12 +29,12 @@ var userSchema = mongoose.Schema({
 
  privateKey:{
     type:String, 
-    match:[/^(0x|0X)[a-fA-F0-9]$/,"Should be a vaild privateKey!"],
+    match:[/^(0x|0X)[a-fA-F0-9]+$/,"Should be a vaild privateKey!"],
     trim:true},
  
  account:{
     type:String, 
-    match:[/^(0x|0X)[a-fA-F0-9]$/,"Should be a vaild wallet account!"],
+    match:[/^(0x|0X)[a-fA-F0-9]+$/,"Should be a vaild wallet account!"],
     trim:true}
 },{
  toObject:{virtuals:true}
