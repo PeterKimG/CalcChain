@@ -5,6 +5,7 @@ var methodOverride = require("method-override");
 var flash = require("connect-flash");
 var session = require("express-session");
 var passport = require("./config/passport");
+var mongo_db = "mongodb+srv://gkskanj:djfudnsqlalfqjsgh@cluster0-vb9pr.mongodb.net/test?retryWrites=true&w=majority"
 var app = express();
 
 // DB setting
@@ -12,7 +13,7 @@ mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect(process.env.mongo_db);
+mongoose.connect(mongo_db);
 var db = mongoose.connection;
 db.once("open", function(){
   console.log("DB connected");
