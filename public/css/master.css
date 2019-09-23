@@ -146,11 +146,11 @@ form .form-group{
 }
 .post .posts .author{
   text-align: center;
-  width: 80px;
+  width: 110px;
 }
 .post .posts .date{
   text-align: center;
-  width: 100px;
+  width: 90px;
   padding-right: 15px;
 }
 .post-new,
