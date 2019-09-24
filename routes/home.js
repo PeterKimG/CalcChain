@@ -6,8 +6,8 @@ var passport = require("../config/passport");
 router.get("/", function(req, res){
   res.render("home/welcome");
 });
-router.get("/about", function(req, res){
-  res.render("home/about");
+router.get("/wallet", function(req, res){
+  res.render("wallet/index");
 });
 
 // login

@@ -11,13 +11,14 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
-        <li><a href="/about">account</a></li>
         <li><a href="/posts">board</a></li>
       </ul>
     </ul>
     <ul class="nav navbar-nav navbar-right"> <!-- 1 -->
       <% if(isAuthenticated){ %>
         <li><a href="/users/<%= currentUser.username %>">My Account</a></li>
+        <li><a href="/users/wallet/<%= currentUser.username %>">My wallet</a></li>
+        <li><a href="/users">user list</a></li>
         <li><a href="/logout">Logout</a></li>
        <% } else { %>
         <li><a href="/users/new">Sign Up</a></li>

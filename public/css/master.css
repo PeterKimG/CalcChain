@@ -75,7 +75,8 @@ form .form-group{
 
 /* home style */
 .home h1{
-  color: darkseagreen;
+  color: rgb(6, 24, 85);
+  font-size: 200px;
 }
 .home-login{
   max-width: 330px;

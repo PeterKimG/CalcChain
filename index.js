@@ -39,14 +39,15 @@ app.use(passport.session());
 
 //custom middlewares - req.local contains below two things, params can be used to ejs
 app.use(function(req, res, next){ 
-  res.locals.isAuthenticated = req.isAuthenticated(); // login chech; ture and false
+  res.locals.isAuthenticated = req.isAuthenticated(); // login check; ture and false
   res.locals.currentUser = req.user; // pull user information
   next();
 })
 
 // Routes
 app.use("/", require("./routes/home"));
-app.use("/posts", require("./routes/posts")); // 1
+app.use("/wallet", require("./routes/users"))
+app.use("/posts", require("./routes/posts"));
 app.use("/users", require("./routes/users"));
 
 // Port setting
