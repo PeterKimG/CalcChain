@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var Post = require("../models/Post");
+var Post = require("../models/post");
 var util = require("../util")
 
 // Index 
