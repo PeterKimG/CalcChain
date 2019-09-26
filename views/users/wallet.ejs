@@ -19,20 +19,23 @@
     <div class="contentBox">
      <h3 class="contentBoxTop"><%= user.username %> account</h3>
      <fieldset disabled>
-      
+      <div class="form-group">
+        <label for="account" class="col-sm-3">Account</label>
         <div class="col-sm-9">
          <input class="form-control" type="text" id="account" name="account" value="<%= user.account %>">
-         <p><%= user.account %></p>
-         <p><%= user.account %></p>
-         <p><%= user.account %></p>
-         <p><%= user.account %></p>
-         <p><%= user.account %></p>
-         
-        
+        </div>
+       </div>
+       <div class="form-group">
+        <label for="privateKey" class="col-sm-3">privateKey</label>
+        <div class="col-sm-9">
+         <input class="form-control" type="text" id="privateKey" name="privateKey" value="Not yet registered">
+        </div>
        </div>
      </fieldset>
     </div>
-   </form>
+  </form>
+  <div class="buttons col-sm-12">
+    <a class="btn btn-default" href="/wallet">PrivateKey register</a>
 
   </div> <!-- container end -->
  </body>
