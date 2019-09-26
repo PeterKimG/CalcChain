@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <% include ../partials/head %>
+ </head>
+ <body>
+  <% include ../partials/nav %>
+
+  <div class="container user user-show">
+    <div class="buttons">
+      <a class="btn btn-default" href="/">Home</a>
+      <% if(isAuthenticated && currentUser.id == user.id){ %> <!-- 1 -->
+       <a class="btn btn-default" href="javascript:history.back()">Back</a>
+      <% } %>
+     </div>
+
+
+    
+    
+    </form>
+   <form class="user-form form-horizontal" action="/uploads" method="post">
+    <div class="contentBox">
+     <h3 class="contentBoxTop"><%= user.username %> account</h3>
+     <fieldset disabled>
+       <div class="col-sm-9">
+        <input class="form-control" type="text" id="account" name="account" value="<%= user.account %>">
+         <p><%= user.account %></p>
+        </div>
+     </fieldset>
+    </div>
+   </form>
+   <form class="user-form form-horizontal" method='post' enctype="multipart/form-data">
+    <input type='file' name='userfile'>
+    <input type='submit'>
+  </div> <!-- container end -->
+ </body>
+</html>
