@@ -139,7 +139,7 @@ form .form-group{
   border-bottom: 1px solid #ccc;
 }
 .post .posts tbody tr:nth-child(odd){
-  background-color: #F4FFFF;
+  background-color: rgb(249, 248, 255);
 }
 .post .posts tbody .noData{
   background-color: #FFFFFF;
@@ -193,4 +193,11 @@ form .form-group{
 .user-edit hr{
   margin-top: 5px;
   margin-bottom: 11px;
+}
+
+/* wallet style */
+.upload {
+  max-width: 450px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
 }

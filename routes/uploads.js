@@ -1,5 +1,4 @@
 var express = require('express');
-var bodyPaser = require('body-parser');
 var multer = require('multer');
 var router = express.Router();
 var util = require("../util");
