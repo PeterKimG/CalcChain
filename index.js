@@ -6,6 +6,7 @@ var flash = require("connect-flash");
 var session = require("express-session");
 var passport = require("./config/passport");
 var mongo_db = "mongodb+srv://gkskanj:djfudnsqlalfqjsgh@cluster0-vb9pr.mongodb.net/test?retryWrites=true&w=majority"
+var fs = require("fs")
 var app = express();
 
 // DB setting

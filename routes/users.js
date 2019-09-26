@@ -48,6 +48,15 @@ router.get("/wallet/:username", util.isLoggedin, function(req, res){
     });
    });
 
+// managing privateKey
+router.get("/privateKey/:username", util.isLoggedin, function(req, res){
+    User.findOne({username:req.params.username}, function(err, user){
+     if(err) return res.json(err);
+     res.render("users/privateKey", {user:user});
+    });
+   });
+
+
 // edit
 router.get("/:username/edit", util.isLoggedin, checkPermission, function(req, res){
  var user = req.flash("user")[0];

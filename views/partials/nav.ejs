@@ -18,6 +18,7 @@
       <% if(isAuthenticated){ %>
         <li><a href="/users/<%= currentUser.username %>">My Account</a></li>
         <li><a href="/users/wallet/<%= currentUser.username %>">My wallet</a></li>
+        <li><a href="/users/privateKey/<%= currentUser.username %>">Mng. PrivateKey</a></li>
         <li><a href="/users">user list</a></li>
         <li><a href="/logout">Logout</a></li>
        <% } else { %>
