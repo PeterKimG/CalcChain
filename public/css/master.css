@@ -91,7 +91,7 @@ form .form-group{
   font-size: 12px;
 }
 .post h2 {
-  color: tomato;
+  color: rgb(85, 85, 85);
   text-align: center;
 }
 .post .post-body {

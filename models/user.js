@@ -6,35 +6,35 @@ var userSchema = mongoose.Schema({
  username:{
      type:String, 
      required:[true,"Username is required!"], 
-     match:[/^.{4,12}$/,"Should be 4-12 characters!"],
+     match:[/^.{4,12}$/,"4-12자로 맞추렴"],
      trim:true, 
      unique:true},
  
  password:{
      type:String, 
-     required:[true,"Password is required!"], 
+     required:[true,"비밀번호를 입력하렴"], 
      select:false},
  
  name:{
      type:String, 
      required:[true,"Name is required!"],
-     match:[/^.{4,12}$/, "Should be 4-12 characters!"],
+     match:[/^.{4,12}$/, "4-12자로 맞추렴"],
      trim:true},
  
  email:{
     type:String, 
-    required:[true,"email address is required!"],
-    match:[/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/,"Should be a vaild email address!"],
+    required:[true,"메일 주소를 쓰라고!"],
+    match:[/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/,"응 틀렸어"],
     trim:true},
 
  privateKey:{
     type:String, 
-    match:[/^(0x|0X)[a-fA-F0-9]+$/,"Should be a vaild privateKey!"],
+    match:[/^(0x|0X)[a-fA-F0-9]+$/,"응 틀렸어"],
     trim:true},
  
  account:{
     type:String, 
-    match:[/^(0x|0X)[a-fA-F0-9]+$/,"Should be a vaild wallet account!"],
+    match:[/^(0x|0X)[a-fA-F0-9]+$/,"응 틀렸어"],
     trim:true}
 },{
  toObject:{virtuals:true}
@@ -59,19 +59,19 @@ userSchema.virtual("newPassword")
 
 // password validation // 3
 var passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
-var passwordRegexErrorMessage = "Should be minimum 8 characters of alphabet and number combination!";
+var passwordRegexErrorMessage = "8자 이상 영문+숫자조합";
 userSchema.path("password").validate(function(v) {
  var user = this; // 3-1
 
  // create user // 3-3
  if(user.isNew){
     if(!user.passwordConfirmation){
-      user.invalidate("passwordConfirmation", "Password Confirmation is required!");
+      user.invalidate("passwordConfirmation", "응 틀렸어");
     }
     if(!passwordRegex.test(user.password)){
       user.invalidate("password", passwordRegexErrorMessage);
     } else if(user.password !== user.passwordConfirmation) {
-      user.invalidate("passwordConfirmation", "Password Confirmation does not matched!");
+      user.invalidate("passwordConfirmation", "응 틀렸어");
     }
   }
 
