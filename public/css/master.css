@@ -160,6 +160,9 @@ form .form-group{
   background-color: #FFFFFF;
   text-align: center;
 }
+.table .title2{
+  text-align: center;
+}
 .post .posts .author{
   text-align: center;
   width: 110px;

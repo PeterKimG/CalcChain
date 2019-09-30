@@ -63,7 +63,12 @@ app.get('/sendtx',function(req,res){
             count = v;
             var amount = web3js.utils.toHex(1e16);
             //creating raw tranaction
-            var rawTransaction = {"from":myAddress, "gasPrice":web3js.utils.toHex(20* 1e9),"gasLimit":web3js.utils.toHex(210000),"to":contractAddress,"value":"0x0","data":contract.methods.transfer(toAddress, amount).encodeABI(),"nonce":web3js.utils.toHex(count)}
+            var rawTransaction = {
+                "from":myAddress, "gasPrice":web3js.utils.toHex(20* 1e9),"gasLimit":web3js.utils.toHex(210000),
+                "to":contractAddress,"value":"0x0",
+                "data":contract.methods.transfer(toAddress, amount).encodeABI(),
+                "nonce":web3js.utils.toHex(count)
+            }
             console.log(rawTransaction);
             //creating tranaction via ethereumjs-tx
             var transaction = new Tx(rawTransaction);
@@ -80,6 +85,7 @@ app.get('/sendtx',function(req,res){
 app.listen(3000, () => console.log('Example app listening on port 3000!'))
 */
 
+
 const web3 = require('web3');
 const express = require('express');
 const Tx = require('ethereumjs-tx');
@@ -89,7 +95,5 @@ const myAddress = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
 //Infura HttpProvider Endpoint
 web3js = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
 
-web3js.eth.getBalance(myAddress)
-console.log(web3js.eth.getBalance(myAddress))
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+console.log(web3js.eth.accounts.create())

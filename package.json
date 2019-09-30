@@ -44,5 +44,8 @@
     "passport-local": "^1.0.0",
     "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.2.1"
+  },
+  "devDependencies": {
+    "solc": "^0.5.11"
   }
 }
