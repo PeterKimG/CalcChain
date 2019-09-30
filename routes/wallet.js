@@ -1,7 +1,5 @@
 //ethereum wallet things will be here
-
-
-
+/*
 const express = require('express');
 const Web3 = require('web3');
 const fs = require('fs');
@@ -35,6 +33,5 @@ contract.methods.set(7)
         gas: 2000000,
         gasPrice: 4000000000
     })
-
-
+*/
 
