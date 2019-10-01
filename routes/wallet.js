@@ -42,6 +42,7 @@ const Tx = require('ethereumjs-tx');
 const app = express();
 
 //Infura HttpProvider Endpoint
+
 web3js = new web3(new web3.providers.HttpProvider("https://rinkeby.infura.io/YOUR_API_KEY"));
 
 app.get('/sendtx',function(req,res){
@@ -89,7 +90,13 @@ const myAddress = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
 //Infura HttpProvider Endpoint
 web3js = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
 
-web3js.eth.getBalance(myAddress)
-console.log(web3js.eth.getBalance(myAddress))
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+
+
+//web3js.eth.getBalance(myAddress).then(console.log) //잔액조회
+
+//console.log(web3js.eth.getBalance(myAddress)) // 잔액조회
+
+console.log(web3js.eth.accounts.create('',function(password){123})); // 계정생성
+
+//app.listen(3000, () => console.log('Example app listening on port 3000!'))
