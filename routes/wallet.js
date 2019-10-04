@@ -88,15 +88,21 @@ const Tx = require('ethereumjs-tx');
 const app = express();
 const myAddress = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
 //Infura HttpProvider Endpoint
-web3js = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
+Web3 = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
 
 
 
 
-//web3js.eth.getBalance(myAddress).then(console.log) //잔액조회
+//Web3.eth.getBalance(myAddress).then(console.log) //잔액조회
 
-//console.log(web3js.eth.getBalance(myAddress)) // 잔액조회
+//console.log(Web3.eth.getBalance(myAddress)) // 잔액조회
 
-console.log(web3js.eth.accounts.create('',function(password){123})); // 계정생성
+//Web3.eth.getAccounts().then(console.log); //계좌조회
+
+//console.log(Web3.eth.accounts.create('',function(password){123})); // 계정생성
 
 //app.listen(3000, () => console.log('Example app listening on port 3000!'))
+
+//Web3.eth.accounts.encrypt('0x42f0ac9a647fabdb1e12685f2bf0cc186868b1cca1edeeffca2e89ebd9f240d4','123')
+
+Web3.eth.personal.unlockAccount('0x3E8f4390728643ce0a3675a3AAEA6439A275827E','123', 600).then(console.log('Account unlocked!'));
