@@ -1,96 +1,34 @@
-//ethereum wallet things will be here
-/*
-const express = require('express');
-const Web3 = require('web3');
-const fs = require('fs');
-
-const app = express();
-app.use(express.json());
-
-console.log('server side code running');
-app.listen(3000, () => {
-    console.log('Listening on port 3000');
-});
-
-if (typeof web3 !== 'undefined') {
-    web3 = new Web3(web3.currentProvider);
-}
-else {
-    web3 = new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
-}
-
-var contractabi = JSON.parse(fs.readFileSync('abi.json', 'utf8'));
-var contractaddress = '0xb51adbdd256930bd6b4c613add6fcca31db49827';
-var contract = new web3.eth.Contract(contractabi,contractaddress);
-
-const privateKey = 'my private key';
-const account = web3.eth.accounts.privateKeyToAccount('0x' + privateKey);
-web3.eth.accounts.wallet.add(account);
-web3.eth.defaultAccount = account.address;
-contract.methods.set(7)
-    .send({
-        from: web3.eth.defaultAccount,
-        gas: 2000000,
-        gasPrice: 4000000000
-    })
-*/
-/*
-const web3 = require('web3');
-const express = require('express');
-const Tx = require('ethereumjs-tx');
-
-const app = express();
-
-//Infura HttpProvider Endpoint
-
-web3js = new web3(new web3.providers.HttpProvider("https://rinkeby.infura.io/YOUR_API_KEY"));
-
-app.get('/sendtx',function(req,res){
-
-        var myAddress = 'ADDRESS_THAT_SENDS_TRANSACTION';
-        var privateKey = Buffer.from('YOUR_PRIVATE_KEY', 'hex')
-        var toAddress = 'ADRESS_TO_SEND_TRANSACTION';
-
-        //contract abi is the array that you can get from the ethereum wallet or etherscan
-        var contractABI =YOUR_CONTRACT_ABI;
-        var contractAddress ="YOUR_CONTRACT_ADDRESS";
-        //creating contract object
-        var contract = new web3js.eth.Contract(contractABI,contractAddress);
-
-        var count;
-        // get transaction count, later will used as nonce
-        web3js.eth.getTransactionCount(myAddress).then(function(v){
-            console.log("Count: "+v);
-            count = v;
-            var amount = web3js.utils.toHex(1e16);
-            //creating raw tranaction
-            var rawTransaction = {"from":myAddress, "gasPrice":web3js.utils.toHex(20* 1e9),"gasLimit":web3js.utils.toHex(210000),"to":contractAddress,"value":"0x0","data":contract.methods.transfer(toAddress, amount).encodeABI(),"nonce":web3js.utils.toHex(count)}
-            console.log(rawTransaction);
-            //creating tranaction via ethereumjs-tx
-            var transaction = new Tx(rawTransaction);
-            //signing transaction with private key
-            transaction.sign(privateKey);
-            //sending transacton via web3js module
-            web3js.eth.sendSignedTransaction('0x'+transaction.serialize().toString('hex'))
-            .on('transactionHash',console.log);
-                
-            contract.methods.balanceOf(myAddress).call()
-            .then(function(balance){console.log(balance)});
-        })
-    });
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
-*/
+var express = require("express");
+var router = express.Router();
+var User = require("../models/user");
+var util = require("../util");
 
 const web3 = require('web3');
-const express = require('express');
 const Tx = require('ethereumjs-tx');
 
-const app = express();
 const myAddress = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
 //Infura HttpProvider Endpoint
 Web3 = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
 
 
+console.log(Web3.eth.accounts.create(''))
+var newAddress = console.log(Web3.eth.accounts.create('').address)
+var newprivateKey = console.log(Web3.eth.accounts.create('').privateKey)
+
+
+router.get("/", util.isLoggedin, function(req, res){
+    User.findOne({username:req.params.username}, function(err, user){
+        if(err) return res.json(err);
+        res.render("wallet/index", {user:req.user});
+       });
+   });
+
+router.get("/:username", util.isLoggedin, function(req, res){
+    User.findOne({username:req.params.username}, function(err, user){
+     if(err) return res.json(err);
+     res.render("wallet/wallet", {user:user});
+    });
+   });
 
 
 //Web3.eth.getBalance(myAddress).then(console.log) //잔액조회
@@ -99,10 +37,62 @@ Web3 = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66
 
 //Web3.eth.getAccounts().then(console.log); //계좌조회
 
-//console.log(Web3.eth.accounts.create('',function(password){123})); // 계정생성
+//console.log(Web3.eth.accounts.create('',function(password){'123'})); // 계정생성
 
 //app.listen(3000, () => console.log('Example app listening on port 3000!'))
 
-//Web3.eth.accounts.encrypt('0x42f0ac9a647fabdb1e12685f2bf0cc186868b1cca1edeeffca2e89ebd9f240d4','123')
+//console.log(Web3.eth.accounts.encrypt('0x42f0ac9a647fabdb1e12685f2bf0cc186868b1cca1edeeffca2e89ebd9f240d4','123'))
 
-Web3.eth.personal.unlockAccount('0x3E8f4390728643ce0a3675a3AAEA6439A275827E','123', 600).then(console.log('Account unlocked!'));
+//Web3.eth.personal.unlockAccount('0x3E8f4390728643ce0a3675a3AAEA6439A275827E','123', 600).then(console.log('Account unlocked!'));
+
+//console.log(Web3.eth.personal.unlockAccount('0xb3bd0Cb1567EF9De5AB16A24E6233F0A6c7aB03F','123', 600))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+module.exports = router;
+
+//Functions
+function parseError(errors){
+    var parsed = {};
+    if(errors.name == 'ValidationError'){
+        for(var name in errors.errors){
+            var validationError = errors.errors[name];
+            parsed[name] = {message:validationError.message}}
+    } else if(errors.code == "11000" && errors.errmsg.indexOf("username") > 0) {
+        parsed.username = {message:"This username already exists!"};
+    } else {
+        parsed.unhandled = JSON.stringify(errors);
+    }
+    return parsed;
+}
+
+// private function 
+
+function checkPermission(req, res, next){
+    User.findOne({username:req.params.username}, function(err, user){
+     if(err) return res.json(err);
+     if(user.id != req.user.id) return util.noPermission(req, res);
+   
+     next();
+    });
+   }

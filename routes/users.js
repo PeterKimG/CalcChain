@@ -40,13 +40,15 @@ router.get("/:username", util.isLoggedin, function(req, res){
  });
 });
 
-// show wallet
-router.get("/wallet/:username", util.isLoggedin, function(req, res){
+// show account
+router.get("/account/:username", util.isLoggedin, function(req, res){
     User.findOne({username:req.params.username}, function(err, user){
      if(err) return res.json(err);
-     res.render("users/wallet", {user:user});
+     res.render("users/account", {user:user});
     });
    });
+
+
 
 // managing privateKey
 router.get("/privateKey/:username", util.isLoggedin, function(req, res){

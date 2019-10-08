@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <% include ../partials/head %>
+ </head>
+ <body>
+  <% include ../partials/nav %>
+
+  <div class="container user user-show">
+
+    <div class="buttons">
+      <a class="btn btn-default" href="/wallet">Back</a>
+      <% if(isAuthenticated && currentUser.id == user.id){ %> <!-- 1 -->
+       <a class="btn btn-default" href="/wallet/<%= user.username %>/edit">go my wallet</a>
+      <% } %> <!-- 1 -->
+     </div>
+
+   <form class="user-form form-horizontal" action="/users" method="post">
+    <div class="contentBox">
+     <h3 class="contentBoxTop"><%= user.username %> account</h3>
+     <fieldset disabled>
+      <div class="form-group">
+        <label for="account" class="col-sm-3">Account</label>
+        <div class="col-sm-9">
+         <input class="form-control" type="text" id="account" name="account" value="<%= user.account %>">
+        </div>
+       </div>
+       <div class="form-group">
+        <label for="privateKey" class="col-sm-3">privateKey</label>
+        <div class="col-sm-9">
+         <input class="form-control" type="text" id="privateKey" name="privateKey" value="Not yet registered">
+        </div>
+       </div>
+     </fieldset>
+    </div>
+  </form>
+  <div class="buttons col-sm-12">
+    <a class="btn btn-primary" href="/wallet">privateKey register</a>
+    <a class="btn btn-default" href="/wallet">Import privateKey</a>
+  </br>
+    <%= user.account %></br>
+  </div> <!-- container end -->
+ </body>
+</html>

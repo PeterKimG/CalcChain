@@ -49,7 +49,7 @@ app.use(function(req, res, next){
 app.use("/", require("./routes/home"));
 app.use("/posts", require("./routes/posts"));
 app.use("/users", require("./routes/users"));
-app.use("/wallet", require("./routes/users"));
+app.use("/wallet", require("./routes/wallet"));
 app.use("/uploads", require("./routes/uploads"));
 
 // Port setting

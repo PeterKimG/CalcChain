@@ -1,0 +1,16 @@
+코드의 주요 부분만 간단히 설명하면 이렇습니다.
+struct FileDetails { uint timestamp; string owner; }
+파일 소유자를 관리하기 위한 구조체로 단순히 블락의 타임스탬프와 파일 소유자를 저장합니다.
+
+mapping (string => FileDetails) files;
+mapping이라는 키워드는 key-value 구조를 갖는 데이터를 가리킵니다. 이때 key값으로 0, 1, 2 를 사용하지 않고, address나 다른 데이터 타입으로 key를 설정할 때 사용합니다.
+mapping의 의미대로 어떤 데이터 타입을 다른 데이터 타입으로 연결(mapping)하주는 역할을 합니다.
+여기서는 files이라는 변수를 mapping이라는 데이터 타입으로 선언하고, 그것의 key 타입은 string이고, value 타입은 FileDetails라는 구조체 타입니다.
+
+mapping이라는 개념이 데이터 타입이 다른 프로그래밍 언어에도 존재하는데, 그 문법 형태가 다르고, 중간에 =>와 같은 기호도 들어가보니 의미를 파악하기 헷갈리는데 단순히 key-value를 저장하는 데이터 타입이라고 보시면 쉽습니다.
+
+나머지 솔리티디 코딩 내용은 소유자를 set하는 기능을 하는 함수와 get하는 기능을 하는 get 함수입니다. 단순히 상태변수인
+구조체에 값을 읽고 쓰는 것입니다.
+
+https://opentutorials.org/module/3136/20680
+web3.js를 이용한 간단한 Dapp 구축 따라하기
