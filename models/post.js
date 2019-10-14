@@ -1,4 +1,6 @@
 var mongoose = require("mongoose");
+var util = require("../util")
+
 
 // schema
 var postSchema = mongoose.Schema({ // 1

@@ -10,25 +10,54 @@ const myAddress = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
 //Infura HttpProvider Endpoint
 Web3 = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
 
-
-console.log(Web3.eth.accounts.create(''))
-var newAddress = console.log(Web3.eth.accounts.create('').address)
-var newprivateKey = console.log(Web3.eth.accounts.create('').privateKey)
+//var newAccount = Web3.eth.accounts.create('')
 
 
-router.get("/", util.isLoggedin, function(req, res){
-    User.findOne({username:req.params.username}, function(err, user){
-        if(err) return res.json(err);
-        res.render("wallet/index", {user:req.user});
-       });
-   });
+// function newAccount() {
+//     var newAccount = Web3.eth.accounts.create('')
+//     newAccount;
+//     console.log(newAccount)
+//     newAddress = console.log(newAccount.address)
+//     newprivateKey = console.log(newAccount.privateKey)
+// }
 
-router.get("/:username", util.isLoggedin, function(req, res){
-    User.findOne({username:req.params.username}, function(err, user){
-     if(err) return res.json(err);
-     res.render("wallet/wallet", {user:user});
+// newAccount();
+
+
+//var newAddress = console.log(Web3.eth.accounts.create('').address)
+//var newprivateKey = console.log(Web3.eth.accounts.create('').privateKey)
+
+
+router.get("/", util.isLoggedin, function (req, res) {
+    User.findOne({ username: req.params.username }, function (err, user) {
+        if (err) return res.json(err);
+        res.render("wallet/index", { user: req.user });
     });
-   });
+});
+
+router.get("/:username", util.isLoggedin, function (req, res) {
+    User.findOne({ username: req.params.username }, function (err, user) {
+        if (err) return res.json(err);
+        return res.render("wallet/wallet", {user:user});
+    });
+});
+
+
+router.get("/:username/new", util.isLoggedin, function (req, res) {
+    let newAccount = Web3.eth.accounts.create('')
+    let { address, privateKey } = newAccount
+    console.log(newAccount)
+    console.log(address)
+    console.log(privateKey)
+    User.findOne({ username: req.params.username }, function (err, user) {
+        if (err) return res.json(err);
+        return res.render("wallet/new", {
+            user:user,
+            address,
+            privateKey
+        });
+    });
+});
 
 
 //Web3.eth.getBalance(myAddress).then(console.log) //잔액조회
@@ -72,14 +101,15 @@ router.get("/:username", util.isLoggedin, function(req, res){
 module.exports = router;
 
 //Functions
-function parseError(errors){
+function parseError(errors) {
     var parsed = {};
-    if(errors.name == 'ValidationError'){
-        for(var name in errors.errors){
+    if (errors.name == 'ValidationError') {
+        for (var name in errors.errors) {
             var validationError = errors.errors[name];
-            parsed[name] = {message:validationError.message}}
-    } else if(errors.code == "11000" && errors.errmsg.indexOf("username") > 0) {
-        parsed.username = {message:"This username already exists!"};
+            parsed[name] = { message: validationError.message }
+        }
+    } else if (errors.code == "11000" && errors.errmsg.indexOf("username") > 0) {
+        parsed.username = { message: "This username already exists!" };
     } else {
         parsed.unhandled = JSON.stringify(errors);
     }
@@ -88,11 +118,11 @@ function parseError(errors){
 
 // private function 
 
-function checkPermission(req, res, next){
-    User.findOne({username:req.params.username}, function(err, user){
-     if(err) return res.json(err);
-     if(user.id != req.user.id) return util.noPermission(req, res);
-   
-     next();
+function checkPermission(req, res, next) {
+    User.findOne({ username: req.params.username }, function (err, user) {
+        if (err) return res.json(err);
+        if (user.id != req.user.id) return util.noPermission(req, res);
+
+        next();
     });
-   }
+}

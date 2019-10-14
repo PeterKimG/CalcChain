@@ -16,26 +16,33 @@
      </div>
 
    <form class="user-form form-horizontal" action="/users" method="post">
-    <div class="contentBox">
+    <div class="contentBox2">
      <h3 class="contentBoxTop"><%= user.username %> account</h3>
      <fieldset disabled>
-      <div class="form-group">
-        <label for="account" class="col-sm-3">Account</label>
+      <div class="form-group-wallet">
+        <label for="account" class="col-sm-6">New address</label>
         <div class="col-sm-9">
-         <input class="form-control" type="text" id="account" name="account" value="<%= user.account %>">
+         <input class="form-control-wallet" type="text" id="account" name="account" value="<%= address %>">
         </div>
        </div>
-       <div class="form-group">
-        <label for="privateKey" class="col-sm-3">privateKey</label>
+       <div class="form-group-wallet">
+        <label for="privateKey" class="col-sm-6">New privateKey</label>
         <div class="col-sm-9">
-         <input class="form-control" type="text" id="privateKey" name="privateKey" value="Not yet registered">
+         <input class="form-control-wallet" type="text" id="privateKey" name="privateKey" value="<%= privateKey %>">
         </div>
        </div>
+    
      </fieldset>
+     <br>
+     New address is saved on server. Please save your privateKey to your drive.
     </div>
   </form>
   <div class="buttons col-sm-12">
+    <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">Save PrivateKey</a>
     <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">New Account</a>
+
+  </br>
+    <%= user.account %></br>
   </div> <!-- container end -->
  </body>
 </html>
