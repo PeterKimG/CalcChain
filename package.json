@@ -44,7 +44,9 @@
     "parity": "^0.2.7",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "request": "^2.88.0",
     "truffle-hdwallet-provider": "^1.0.17",
+    "util": "^0.12.1",
     "web3": "^1.2.1"
   },
   "devDependencies": {
