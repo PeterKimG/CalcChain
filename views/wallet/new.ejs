@@ -19,7 +19,7 @@
           <div class="form-group-wallet <%= (errors.address)?'has-error':'' %>">
             <label for="address" class="col-sm-6">New address</label>
             <div class="col-sm-9">
-              <input class="form-control-wallet" type="text" id="address" name="address" value="<%= address %>" value="<%= wallet.address %>">
+              <input class="form-control-wallet" type="text" id="address" name="address" value="<%= address %>" value="<%= wallet.address %>" disabled>
               <% if(errors.address){ %>
               <span class="help-block"><%= errors.address.message %></span>
               <% } %>
@@ -28,7 +28,7 @@
           <div class="form-group-wallet <%= (errors.privateKey)?'has-error':'' %>">
             <label for="privateKey" class="col-sm-6">New privateKey</label>
             <div class="col-sm-9">
-              <input class="form-control-wallet" type="text" id="privateKey" name="privateKey" value="<%= privateKey %>" value="<%= wallet.privateKey %>">
+              <input class="form-control-wallet" type="text" id="privateKey" name="privateKey" value="<%= privateKey %>" value="<%= wallet.privateKey %>" disabled>
               <% if(errors.privateKey){ %>
               <span class="help-block"><%= errors.privateKey.message %></span>
               <% } %>
