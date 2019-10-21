@@ -1,49 +1,59 @@
 <!DOCTYPE html>
 <html>
- <head>
+
+<head>
   <% include ../partials/head %>
- </head>
- <body>
+</head>
+
+<body>
   <% include ../partials/nav %>
 
   <div class="container user user-show">
 
-    <div class="buttons">
-      <a class="btn btn-default" href="/wallet">Back</a>
-      <% if(isAuthenticated && currentUser.id == user.id){ %> <!-- 1 -->
-       <a class="btn btn-default" href="/wallet/<%= user.username %>/edit">go my wallet</a>
-      <% } %> <!-- 1 -->
-     </div>
 
-   <form class="user-form form-horizontal" action="/users" method="post">
-    <div class="contentBox2">
-     <h3 class="contentBoxTop"><%= user.username %> account</h3>
-     <fieldset disabled>
-      <div class="form-group-wallet">
-        <label for="account" class="col-sm-6">New address</label>
-        <div class="col-sm-9">
-         <input class="form-control-wallet" type="text" id="account" name="account" value="<%= address %>">
-        </div>
-       </div>
-       <div class="form-group-wallet">
-        <label for="privateKey" class="col-sm-6">New privateKey</label>
-        <div class="col-sm-9">
-         <input class="form-control-wallet" type="text" id="privateKey" name="privateKey" value="<%= privateKey %>">
-        </div>
-       </div>
-    
-     </fieldset>
-     <br>
-     New address is saved on server. Please save your privateKey to your drive. </br>
-     And go to your wallet tap and check your address lists.
-    </div>
-  </form>
-  <div class="buttons col-sm-12">
-    <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">Save PrivateKey</a>
-    <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">New Account</a>
 
-  </br>
-    <%= user.account %></br>
-  </div> <!-- container end -->
- </body>
+    <form class="user-form form-horizontal" action="/wallet" method="post">
+      <div class="contentBox2">
+        <h3 class="contentBoxTop"> account</h3>
+        <fieldset>
+          <div class="form-group-wallet <%= (errors.address)?'has-error':'' %>">
+            <label for="address" class="col-sm-6">New address</label>
+            <div class="col-sm-9">
+              <input class="form-control-wallet" type="text" id="address" name="address" value="<%= address %>" value="<%= wallet.address %>">
+              <% if(errors.address){ %>
+              <span class="help-block"><%= errors.address.message %></span>
+              <% } %>
+            </div>
+          </div>
+          <div class="form-group-wallet <%= (errors.privateKey)?'has-error':'' %>">
+            <label for="privateKey" class="col-sm-6">New privateKey</label>
+            <div class="col-sm-9">
+              <input class="form-control-wallet" type="text" id="privateKey" name="privateKey" value="<%= privateKey %>" value="<%= wallet.privateKey %>">
+              <% if(errors.privateKey){ %>
+              <span class="help-block"><%= errors.privateKey.message %></span>
+              <% } %>
+            </div>
+          </div>
+
+        </fieldset>
+        <br>
+        New address is saved on server. Please save your privateKey to your drive. </br>
+        And go to your wallet tap and check your address lists.
+      </div>
+      <div class="buttons submit-container">
+        <button type="submit" class="btn btn-default">Save</button>
+      </div>
+      <% if(errors.unhandled){ %>
+      <div class="alert alert-danger">
+        <%= errors.unhandled %>
+      </div>
+      <% } %>
+    </form>
+
+
+      </br>
+      
+    </div> <!-- container end -->
+</body>
+
 </html>

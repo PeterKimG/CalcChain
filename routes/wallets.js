@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var User = require("../models/user");
 var util = require("../util");
+var Wallet = require("../models/wallet")
 
 const web3 = require('web3');
 const Tx = require('ethereumjs-tx');
@@ -29,9 +30,12 @@ Web3 = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66
 
 
 router.get("/", util.isLoggedin, function (req, res) {
-    User.findOne({ username: req.params.username }, function (err, user) {
-        if (err) return res.json(err);
-        res.render("wallet/index", { user: req.user });
+    Wallet.find({})
+    .populate("owner")
+    .sort("-createdAt")
+    .exec(function(err, wallet){
+        if(err) return res.json(err);
+        res.render("wallet/index", {wallet:wallet});
     });
 });
 
@@ -44,18 +48,34 @@ router.get("/:username", util.isLoggedin, function (req, res) {
 
 
 router.get("/:username/new", util.isLoggedin, function (req, res) {
+    var wallet = req.flash("wallet") [0] || {};
+    var errors = req.flash("errors") [0] || {};
     let newAccount = Web3.eth.accounts.create('')
     let { address, privateKey } = newAccount
-    console.log(newAccount)
-    console.log(address)
-    console.log(privateKey)
+    // console.log(newAccount)
+    // console.log(address)
+    // console.log(privateKey)
     User.findOne({ username: req.params.username }, function (err, user) {
         if (err) return res.json(err);
         return res.render("wallet/new", {
             user:user,
             address,
-            privateKey
+            privateKey,
+            wallet:wallet,
+            errors:errors
         });
+    });
+});
+
+router.post("/", util.isLoggedin, function(req, res){
+    req.body.owner = req.user._id;
+    Wallet.create(req.body, function(err, wallet){
+        if(err) {
+            req.flash("wallet", req.body);
+            req.flash("errors", util.parseError(err));
+            return res.redirect("/wallet/:username/new");
+        }
+        res.redirect("/wallet/:username");
     });
 });
 
