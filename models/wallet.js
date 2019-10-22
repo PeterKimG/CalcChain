@@ -22,20 +22,21 @@ walletSchema.virtual("createdTime")
   return util.getTime(this.createdAt);
 });
 
+function getDate(dateObj){
+  if(dateObj instanceof Date)
+    return dateObj.getFullYear() + "-" + get2digits(dateObj.getMonth()+1)+ "-" + get2digits(dateObj.getDate());
+}
+
+function getTime(dateObj){
+  if(dateObj instanceof Date)
+    return get2digits(dateObj.getHours()) + ":" + get2digits(dateObj.getMinutes())+ ":" + get2digits(dateObj.getSeconds());
+}
+
+function get2digits(num){
+  return ("0" + num).slice(-2);
+}
+
 // model & export
 var Wallet = mongoose.model("wallet", walletSchema);
 module.exports = Wallet;
 
-function getDate(dateObj){
-    if(dateObj instanceof Date)
-      return dateObj.getFullYear() + "-" + get2digits(dateObj.getMonth()+1)+ "-" + get2digits(dateObj.getDate());
-  }
-  
-  function getTime(dateObj){
-    if(dateObj instanceof Date)
-      return get2digits(dateObj.getHours()) + ":" + get2digits(dateObj.getMinutes())+ ":" + get2digits(dateObj.getSeconds());
-  }
-  
-  function get2digits(num){
-    return ("0" + num).slice(-2);
-  }

@@ -3,7 +3,6 @@ var router = express.Router();
 var User = require("../models/user");
 var util = require("../util");
 var Wallet = require("../models/wallet")
-
 const web3 = require('web3');
 const Tx = require('ethereumjs-tx');
 
@@ -13,9 +12,8 @@ Web3 = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66
 
 //var newAccount = Web3.eth.accounts.create('')
 
-
 // function newAccount() {
-//     var newAccount = Web3.eth.accounts.create('')
+//     var newAccount = Web3.eth.accounts.create('')    
 //     newAccount;
 //     console.log(newAccount)
 //     newAddress = console.log(newAccount.address)
@@ -39,15 +37,30 @@ router.get("/", util.isLoggedin, function (req, res) {
         });
 });
 
-router.get("/:username", util.isLoggedin, function (req, res) {
-    let { username } = req.params
-    User.findOne({ username }, function (err, user) {
-        // console.log(err)
-        // console.log(user)
+// router.get("/:username", util.isLoggedin, function (req, res) {
+//     let { username } = req.params
+//     User.findOne({ username }, function (err, user) {
+//         // console.log(err)
+//         // console.log(user)
 
+//         if (err) return res.json(err);
+//         return res.render("wallet/wallet", { user: user });
+//     });
+// });
+router.get("/:username", util.isLoggedin, function (req, res) {
+    req.body.owner = req.user._id;
+    User.findOne({_id: req.user._id}, function (err, user) {
         if (err) return res.json(err);
-        return res.render("wallet/wallet", { user: user });
+        
+        Wallet.findOne(req.body)
+        .populate("owner")
+        .exec(function(err, wallet){
+        res.render("wallet/wallet", { 
+            user: user,
+            wallet: wallet
+         });
     });
+})
 });
 
 
@@ -105,28 +118,6 @@ router.post("/", util.isLoggedin, function (req, res) {
 
 //console.log(Web3.eth.personal.unlockAccount('0xb3bd0Cb1567EF9De5AB16A24E6233F0A6c7aB03F','123', 600))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 module.exports = router;
 
 //Functions
@@ -146,7 +137,6 @@ function parseError(errors) {
 }
 
 // private function 
-
 function checkPermission(req, res, next) {
     User.findOne({ username: req.params.username }, function (err, user) {
         if (err) return res.json(err);

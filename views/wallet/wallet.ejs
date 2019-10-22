@@ -10,8 +10,8 @@
 
     <div class="buttons">
       <a class="btn btn-default" href="/wallet">Back</a>
-      <% if(isAuthenticated && currentUser.id == user.id){ %> <!-- 1 -->
-       <a class="btn btn-default" href="/wallet/<%= user.username %>/edit">go my wallet</a>
+      <% if(isAuthenticated && wallet.owner && currentUser.id == wallet.owner.id){ %> <!-- 1 -->
+       <a class="btn btn-default" href="/wallet/<%= wallet.owner %>/edit">go my wallet</a>
       <% } %> <!-- 1 -->
      </div>
 
@@ -22,7 +22,7 @@
       <div class="form-group">
         <label for="account" class="col-sm-3">Account</label>
         <div class="col-sm-9">
-         <input class="form-control" type="text" id="account" name="account" value="<%= user.account %>">
+         <input class="form-control" type="text" id="account" name="account" value="<%= wallet.address %>">
         </div>
        </div>
        <div class="form-group">
@@ -35,7 +35,7 @@
     </div>
   </form>
   <div class="buttons col-sm-12">
-    <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">New Account</a>
+    <a class="btn btn-primary" href="/wallet/<%= wallet.owner %>/new">New Account</a>
   </div> <!-- container end -->
  </body>
 </html>
