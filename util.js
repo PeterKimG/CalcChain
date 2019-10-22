@@ -33,13 +33,13 @@ util.isLoggedin = function(req, res, next){
      res.redirect("/login");
     }
    }
-   
+
    util.noPermission = function(req, res){
     req.flash("errors", {login:"You don't have permission"});
     req.logout();
     res.redirect("/login");
    }
-   
+
 module.exports = util;
 
 // private functions

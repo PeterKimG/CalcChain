@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 var util = require("../util")
 
-
 // schema
 var postSchema = mongoose.Schema({ // 1
   title:{type:String, required:[true, "Title is required!"]},

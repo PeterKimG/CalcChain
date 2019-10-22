@@ -1,7 +1,6 @@
 var mongoose = require("mongoose");
 var util = require("../util")
 
-
 // schema
 var walletSchema = mongoose.Schema({ // 1
   address:{type:String, required:[true, "error!1"]},
