@@ -63,6 +63,22 @@ router.get("/:username", util.isLoggedin, function (req, res) {
 })
 });
 
+router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
+    req.body.owner = req.user._id;
+    User.findOne({_id: req.user._id}, function (err, user) {
+        if (err) return res.json(err);
+        
+        Wallet.findOne(req.body)
+        .populate("owner")
+        .exec(function(err, wallet){
+        res.render("wallet/sendTx", { 
+            user: user,
+            wallet: wallet
+         });
+    });
+})
+});
+
 
 router.get("/:username/new", util.isLoggedin, function (req, res) {
     var wallet = req.flash("wallet")[0] || {};
@@ -141,7 +157,6 @@ function checkPermission(req, res, next) {
     User.findOne({ username: req.params.username }, function (err, user) {
         if (err) return res.json(err);
         if (user.id != req.user.id) return util.noPermission(req, res);
-
         next();
     });
 }
