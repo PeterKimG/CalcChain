@@ -55,9 +55,19 @@ router.get("/:username", util.isLoggedin, function (req, res) {
         Wallet.findOne(req.body)
         .populate("owner")
         .exec(function(err, wallet){
+        Web3.eth.getBalance(`${wallet.address}`).then(console.log)
+
+        const balance = async () => {
+            console.log(await Web3.eth.getBalance(`${wallet.address}`))
+            return console.log(Web3.eth.getBalance(`${wallet.address}`))
+        }
+        const balanceLog = console.log(balance())
+
         res.render("wallet/wallet", { 
             user: user,
-            wallet: wallet
+            wallet: wallet,
+            balanceLog,
+            //https://stackoverflow.com/questions/46550341/how-to-resolve-web3-promises-objects?noredirect=1&lq=1
          });
     });
 })
