@@ -17,7 +17,7 @@
             <label for="address" class="col-sm-6">New address</label>
             <div class="col-sm-9">
               <input class="form-control-wallet" type="text" id="address" name="address" value="<%= address %>"
-                value="<%= wallet.address %>" disabled>
+                value="<%= wallet.address %>" readonly>
               <% if(errors.address){ %>
               <span class="help-block"><%= errors.address.message %></span>
               <% } %>
@@ -27,7 +27,7 @@
             <label for="privateKey" class="col-sm-6">New privateKey</label>
             <div class="col-sm-9">
               <input class="form-control-wallet" type="text" id="privateKey" name="privateKey" value="<%= privateKey %>"
-                value="<%= wallet.privateKey %>" disabled>
+                value="<%= wallet.privateKey %>" readonly>
               <% if(errors.privateKey){ %>
               <span class="help-block"><%= errors.privateKey.message %></span>
               <% } %>

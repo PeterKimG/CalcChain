@@ -8,7 +8,7 @@ const Tx = require('ethereumjs-tx');
 
 const myAddress = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
 //Infura HttpProvider Endpoint
-Web3 = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
+var Web3 = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
 
 //var newAccount = Web3.eth.accounts.create('')
 
@@ -49,44 +49,41 @@ router.get("/", util.isLoggedin, function (req, res) {
 // });
 router.get("/:username", util.isLoggedin, function (req, res) {
     req.body.owner = req.user._id;
-    User.findOne({_id: req.user._id}, function (err, user) {
-        if (err) return res.json(err);
-        
-        Wallet.findOne(req.body)
-        .populate("owner")
-        .exec(function(err, wallet){
-        Web3.eth.getBalance(`${wallet.address}`).then(console.log)
-
-        const balance = async () => {
-            console.log(await Web3.eth.getBalance(`${wallet.address}`))
-            return console.log(Web3.eth.getBalance(`${wallet.address}`))
-        }
-        const balanceLog = console.log(balance())
-
-        res.render("wallet/wallet", { 
-            user: user,
-            wallet: wallet,
-            balanceLog,
-            //https://stackoverflow.com/questions/46550341/how-to-resolve-web3-promises-objects?noredirect=1&lq=1
-         });
-    });
-})
+    User.findOne({ _id: req.user._id },  function (err, user) {
+        if (err) {
+            return res.json(err);
+        } else {
+            Wallet.findOne(req.body)
+            .populate("owner")
+            .exec(async function (err, wallet) {
+                if (!wallet) {
+                    res.redirect('/wallet/:username/new')
+                } else {
+                    res.render("wallet/wallet", {
+                        user: user,
+                        wallet: wallet,
+                        balance: await Web3.eth.getBalance(`${wallet.address}`)
+                    });
+                }
+            }
+        )}
+    })
 });
+
 
 router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
     req.body.owner = req.user._id;
-    User.findOne({_id: req.user._id}, function (err, user) {
+    User.findOne({ _id: req.user._id }, function (err, user) {
         if (err) return res.json(err);
-        
         Wallet.findOne(req.body)
-        .populate("owner")
-        .exec(function(err, wallet){
-        res.render("wallet/sendTx", { 
-            user: user,
-            wallet: wallet
-         });
-    });
-})
+            .populate("owner")
+            .exec(function (err, wallet) {
+                res.render("wallet/sendTx", {
+                    user: user,
+                    wallet: wallet
+                });
+            });
+    })
 });
 
 
@@ -123,7 +120,6 @@ router.post("/", util.isLoggedin, function (req, res) {
             }
             res.redirect(`/wallet/${user.username}`);
         });
-
     });
 });
 
@@ -169,4 +165,4 @@ function checkPermission(req, res, next) {
         if (user.id != req.user.id) return util.noPermission(req, res);
         next();
     });
-}
+};

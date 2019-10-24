@@ -24,13 +24,15 @@
             <div class="form-group">
               <label for="account" class="col-sm-3">Account</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" id="account" name="account" value="<%= wallet.address %>" disabled> 
+                <input class="form-control" type="text" id="account" name="account" 
+                value="<%= wallet.address %>" readonly> 
               </div>
             </div>
             <div class="form-group">
                 <label for="account" class="col-sm-3">Balance</label>
                 <div class="col-sm-9">
-                  <input class="form-control" type="text" id="balance" name="balance" value="<%= balanceLog %>" disabled> 
+                  <input class="form-control" type="text" id="balance" name="balance" 
+                  value="<%= balance %>" disabled> 
                 </div>
               </div>
 
@@ -45,7 +47,7 @@
         </div>
       </form>
       <div class="buttons col-sm-12"> 
-        <a class="btn btn-primary" href="/wallet/<%= wallet.owner %>/new">New Account</a>
+        <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">New Account</a>
         <a class="btn btn-primary" data-clipboard-target="#account">Copy address</a>
         <a class="btn btn-primary" href="https://faucet.ropsten.be">Get faucet</a>
       </div> <!-- container end -->
