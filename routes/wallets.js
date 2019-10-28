@@ -119,6 +119,8 @@ router.post("/", util.isLoggedin, function (req, res) {
                 return res.redirect(`/wallet/${user.username}`);
             }
             res.redirect(`/wallet/${user.username}`);
+            const directory = user.username
+            module.exports = directory;
         });
     });
 });
