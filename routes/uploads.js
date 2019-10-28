@@ -4,17 +4,16 @@ var router = express.Router();
 var util = require("../util");
 var User = require("../models/user");
 var fs = require ('fs');
+
 var _storage = multer.diskStorage({
     destination : function (req, file, cb) {
-        cb(null, 'uploads/')
+        cb(null, `uploads/${user.username}`)
     },
     filename : function(req, file, cb) {
         cb(null, file.originalname)
     }
 });
 var upload = multer({storage:_storage})
-
-
 
 router.get("/:username", util.isLoggedin, function(req, res){
     User.findOne({username:req.params.username}, function(err, user){

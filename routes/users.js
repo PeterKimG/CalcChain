@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var User = require("../models/user");
 var util = require("../util");
+var fs = require('fs')
 
 // Index // 1
 router.get("/", util.isLoggedin, function(req, res){
@@ -28,6 +29,9 @@ router.post("/", function(req, res){
       req.flash("errors", util.parseError(err));
       return res.redirect("/users/new");
      }
+    fs.mkdir(`uploads/${req.body.username}`, {recursive: true}, (err) => {
+        if (err) throw err;
+    });
      res.redirect("/login");
     });
    });
