@@ -31,7 +31,12 @@ app.use(methodOverride("_method"));
 app.use(flash());
 
 //session password
-app.use(session({secret:"myopinion", resave: true, saveUninitialized: true}))
+app.use(session({
+  secret:"myopinion", 
+  resave: true, 
+  saveUninitialized: true,
+  // store: require('mongoose-session')(mongoose)
+}))
 
 //passport setting
 app.use(passport.initialize());
@@ -41,6 +46,11 @@ app.use(passport.session());
 app.use(function(req, res, next){ 
   res.locals.isAuthenticated = req.isAuthenticated(); // login check; ture and false
   res.locals.currentUser = req.user; // pull user information
+  res.locals.session = req.session;
+  // res.locals.currentUser._id = req.user._id 
+  if (req.user) {
+    console.log(req.user.username);
+  }
   next();
 })
 
@@ -50,6 +60,7 @@ app.use("/posts", require("./routes/posts"));
 app.use("/users", require("./routes/users"));
 app.use("/wallet", require("./routes/wallets"));
 app.use("/uploads", require("./routes/uploads"));
+
 
 // Port setting
 var port = 3000

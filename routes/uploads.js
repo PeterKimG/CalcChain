@@ -8,9 +8,6 @@ var fs = require ('fs');
 
 router.get("/:username", util.isLoggedin, function(req, res){
     User.findOne({username:req.params.username}, function(err, user){
-        var directory = user.username;
-        this.directory = directory;
-        console.log(this.directory);
         if(err) return res.json(err);
         res.render("files/uploads", {user:user});
     });
@@ -18,12 +15,10 @@ router.get("/:username", util.isLoggedin, function(req, res){
 
 var _storage = multer.diskStorage({
     destination : function (req, file, cb) {
-        var that = this;
-        console.log(that.directory)
-        cb(null, `uploads/${console.log(that.directory)}`)
+        cb(null, `uploads/${req.user.username}`)
     },
     filename : function(req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now())
+        cb(null, new Date() + file.originalname)
     }
 });
 var upload = multer({storage:_storage})
