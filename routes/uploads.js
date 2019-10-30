@@ -24,8 +24,19 @@ var _storage = multer.diskStorage({
 var upload = multer({storage:_storage})
 
 router.post('/:username', upload.single('userfile'), function(req, res){
-    console.log(req.file);
-    res.send('uploaded: ' + req.file.filename);
+    User.findOne({username:req.params.username}, function(err, user){
+        if(err) return res.json(err);
+        console.log(req.file);
+        let filename = req.file.filename;
+        let originalname = req.file.originalname;
+        let filetype = req.file.mimetype;
+        res.render("files/redirect", {
+            user,
+            filename,
+            originalname,
+            filetype    
+        })
+    })
 })
 
 module.exports = router;

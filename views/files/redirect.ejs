@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <% include ../partials/head %>
+ </head>
+ <body>
+  <% include ../partials/nav %>
+
+  <div class="container upload user-show">
+    <div class="buttons">
+      <a class="btn btn-default" href="/">Home</a>
+      <% if(isAuthenticated && currentUser.id == user.id){ %> <!-- 1 -->
+       <a class="btn btn-default" href="javascript:history.back()">Back</a>
+      <% } %>
+     </div>
+
+
+    
+    
+    </form>
+   <form class="user-form form-horizontal" action="/uploads" method="post">
+    <div class="contentBox">
+     <h3 class="contentBoxTop"><%= user.username %>'s File Managing</h3>
+     <fieldset>
+       <div class="col-sm-9">
+        <h3><%= filename %></h3> <br/>
+        <h3><%= originalname %></h3> <br/>
+        <h3><%= filetype %></h3><br>
+        <h3> file uploaded, redirect in 5 sec...</h3>
+        </div>
+     </fieldset>
+    </div>
+   </form>
+  </div> <!-- container end -->
+ </body>
+ <script type='text/javascript'>
+  setTimeout("location.href='/uploads/:username'",5000);
+ </script>
+</html>
