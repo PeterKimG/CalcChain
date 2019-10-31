@@ -1,0 +1,38 @@
+16 진수인지 또는 정규 표현식을 사용하지 않는지에 관계없이 문자열의 유효성을 검사합니다.
+내가 사용한 표현은 ^ [A-Fa-f0-9] $입니다. 이것을 사용하면 AABB10 문자열이 유효한 16 진수로 인식되지만 문자열 10AABB는 유효하지 않은 것으로 인식됩니다.
+
+문제를 어떻게 해결할 수 있습니까?
+
+우수 답변
+대부분 정규식이 필요하므로 정규식 = ‘^ [a-fA-F0-9] $’입니다. 그러나 나는 문자열의 시작 부분에서 0x (선택) 0x와 같은 것을 생각하면 (아마도) ^ (0x | 0X)? [a-fA-F0-9] $ ‘가 될 것입니다.
+
+/^(0x)[a-fA-F0-9]$/
+/^(0x|0X)[a-fA-F0-9]+$/
+/^(0x|0X)[a-fA-F0-9]+$/
+
+select("password") : password 항목을 가져옴
+select("-password") : password 항목을 숨김
+select({password: 1}) : password 항목을 가져옴
+select({password: 0}) : password 항목을 숨김npm
+
+Windows를 쓰시는거 같으므로..
+nodejs 5.x / Python 2.7 / VS2015 Community 설치하신 후
+
+시스템 path에 %appdata%npm을 추가하시고 npm i npm -g으로 최신 버전 npm으로 업데이트를 해주세요.
+
+그 다음
+
+npm r node-gyp -g
+npm cache clean
+npm i node-gyp -g
+
+
+npm install --global --production windows-build-tools
+npm install --global node-gyp
+setx PYTHON "%USERPROFILE%\.windows-build-tools\python27\python.exe"
+npm config set python python2.7 --global
+npm config set python C:\Python27\python.exe --global
+npm config set msvs_version 2015 --global
+set VCTargetsPath="C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140"
+
+

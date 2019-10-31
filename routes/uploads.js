@@ -9,7 +9,17 @@ var fs = require ('fs');
 router.get("/:username", util.isLoggedin, function(req, res){
     User.findOne({username:req.params.username}, function(err, user){
         if(err) return res.json(err);
-        res.render("files/uploads", {user:user});
+        fs.readdir(`uploads/${req.user.username}`, function (error, filelist) {
+            var list = '<ul>';
+            var i = 0;
+            while ( i < filelist.length ) {
+                list = list + `<li>${filelist[i]}</li><br/>`;
+                i = i+ 1;
+            }
+            list = list + '</ul>';
+            res.render("files/uploads", {user:user, list});
+        })
+        
     });
 });
 
