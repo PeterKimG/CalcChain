@@ -24,8 +24,14 @@
      <fieldset>
        <div class="col-sm-9">
         
-        <p>list of uploaded files</p>
-        <%= list %>
+        <h4>- list of uploaded files</h4>
+        <ul>
+          <% for (var i = 0; i < length; i++) { %>
+            <li>
+              <%= i + ': ' + filelist[i] %><br/><br/>
+            </li>
+          <% } %>
+        </ul>
 
         </div>
      </fieldset>

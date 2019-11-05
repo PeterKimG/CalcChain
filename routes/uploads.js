@@ -10,14 +10,8 @@ router.get("/:username", util.isLoggedin, function(req, res){
     User.findOne({username:req.params.username}, function(err, user){
         if(err) return res.json(err);
         fs.readdir(`uploads/${req.user.username}`, function (error, filelist) {
-            var list = '<ul>';
-            var i = 0;
-            while ( i < filelist.length ) {
-                list = list + `<li>${filelist[i]}</li><br/>`;
-                i = i+ 1;
-            }
-            list = list + '</ul>';
-            res.render("files/uploads", {user:user, list});
+            var length = filelist.length
+            res.render("files/uploads", {user:user, filelist, length});
         })
         
     });
@@ -28,7 +22,7 @@ var _storage = multer.diskStorage({
         cb(null, `uploads/${req.user.username}`)
     },
     filename : function(req, file, cb) {
-        cb(null, new Date() + file.originalname)
+        cb(null, new Date() + ' ' + file.originalname)
     }
 });
 var upload = multer({storage:_storage})
