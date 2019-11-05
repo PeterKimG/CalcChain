@@ -15,7 +15,7 @@
       <% } %> <!-- 1 -->
      </div>
 
-   <form class="user-form form-horizontal" action="/wallet/<%= wallet.owner %>/sendTx" method="post">
+   <form class="user-form form-horizontal" action="/wallet/<%= wallet.owner %>" method="post">
     <div class="contentBox">
      <h3 class="contentBoxTop"><%= user.username %> account</h3>
      <fieldset disabled>
@@ -32,7 +32,7 @@
         </div>
        </div>
      </fieldset>
-     <fieldset>
+     <fieldset disabled>
       <div class="form-group">
         <label for="account" class="col-sm-3">Account from</label>
         <div class="col-sm-9">
@@ -48,18 +48,16 @@
        <div class="form-group">
         <label for="privateKey" class="col-sm-3">Amount to send</label>
         <div class="col-sm-9">
-         <input class="form-control" type="text" id="amount" name="amount" placeholder="type either">
+         <input class="form-control" type="text" id="amount" name="amount" value= "<%= amount %>">
         </div>
        </div>
        <div class="form-group">
         <label for="privateKey" class="col-sm-3">Message data</label>
         <div class="col-sm-9">
-         <input class="form-control" type="text" id="data" name="data" placeholder="type message you want to send">
+         <input class="form-control" type="text" id="data" name="data" value = "<%= data %>">
         </div>
        </div>
-       <div class="buttons submit-container">
-        <button type="submit" class="btn btn-default">Send</button>
-      </div>
+       <p> <%= result %></p>
      </fieldset>
     </div>
   </form>

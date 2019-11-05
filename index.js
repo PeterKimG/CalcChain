@@ -49,7 +49,8 @@ app.use(function(req, res, next){
   res.locals.session = req.session;
   // res.locals.currentUser._id = req.user._id 
   if (req.user) {
-    console.log(req.user.username);
+    // console.log(req.user.username);
+    req.user.username;
   }
   next();
 })

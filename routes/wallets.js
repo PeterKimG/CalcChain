@@ -6,7 +6,7 @@ var Wallet = require("../models/wallet")
 const web3 = require('web3');
 const Tx = require('ethereumjs-tx');
 
-const myAddress = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
+const myAccount = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
 //Infura HttpProvider Endpoint
 var Web3 = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/66f5bc220371494cb3465fca20893eb4"));
 
@@ -47,6 +47,7 @@ router.get("/", util.isLoggedin, function (req, res) {
 //         return res.render("wallet/wallet", { user: user });
 //     });
 // });
+
 router.get("/:username", util.isLoggedin, function (req, res) {
     req.body.owner = req.user._id;
     User.findOne({ _id: req.user._id },  function (err, user) {
@@ -70,17 +71,60 @@ router.get("/:username", util.isLoggedin, function (req, res) {
     })
 });
 
-
+//account.signTransaction
 router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
+    User.findOne({ _id: req.user._id }, function (err, user) {
+        if (err) return res.json(err);
+        var toAcc = req.query.toAcc;
+        var fromAcc = req.query.fromAcc;
+        var amount = req.query.amount;
+        var data = req.query.data;
+        Wallet.findOne(req.body)
+            .populate("owner")
+            .exec(async function (err, wallet) {
+                res.render("wallet/sendTx", {
+                    user: user,
+                    wallet: wallet,
+                    myAccount,
+                    toAcc,
+                    fromAcc,
+                    amount,
+                    data,
+                    method: "get"
+                });
+            });
+    })
+});
+
+router.post("/:username", util.isLoggedin, function (req, res) {
     req.body.owner = req.user._id;
     User.findOne({ _id: req.user._id }, function (err, user) {
         if (err) return res.json(err);
+        var toAcc = req.query.toAcc;
+        var fromAcc = req.query.fromAcc;
+        var amount = req.query.amount;
+        var data = req.query.data;
         Wallet.findOne(req.body)
             .populate("owner")
-            .exec(function (err, wallet) {
-                res.render("wallet/sendTx", {
+            .exec(async function (err, wallet) {
+                var sendTx = await Web3.eth.accounts.signTransaction({
+                    to: toAcc,
+                    value: amount,
+                    gas: 21000,
+                    data: data
+                }, wallet.privateKey)
+                .then(console.log)
+                let result = console.log(sendTx);
+                res.render("wallet/sendTx2", {
                     user: user,
-                    wallet: wallet
+                    wallet: wallet,
+                    myAccount,
+                    toAcc,
+                    fromAcc,
+                    amount,
+                    data,
+                    result,
+                    method: "post"
                 });
             });
     })
