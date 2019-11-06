@@ -9,7 +9,7 @@ var fs = require ('fs');
 router.get("/:username", util.isLoggedin, function(req, res){
     User.findOne({username:req.params.username}, function(err, user){
         if(err) return res.json(err);
-        fs.readdir(`uploads/${req.user.username}`, function (error, filelist) {
+        fs.readdir(`uploads/${req.user.username}`, 'utf8' , function (error, filelist) {
             var length = filelist.length
             res.render("files/uploads", {user:user, filelist, length});
         })
