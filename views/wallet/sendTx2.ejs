@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <% include ../partials/head %>
+ </head>
+ <body>
+  <% include ../partials/nav %>
+
+  <div class="container user user-show">
+
+   <form class="user-form form-horizontal" action="/wallet/<%= user.username %>/sendTx" method="post">
+    <div class="contentBox">
+     <h3 class="contentBoxTop"><%= user.username %>'s result of transaction</h3>
+
+     <fieldset disabled>
+      <div class="form-group">
+        <label for="account" class="col-sm-3">Account from</label>
+        <div class="col-sm-9">
+         <input class="form-control" type="text" id="fromAcc" name="fromAcc" value="<%= fromAcc %>">
+        </div>
+       </div>
+       <div class="form-group">
+        <label for="privateKey" class="col-sm-3">Account to</label>
+        <div class="col-sm-9">
+         <input class="form-control" type="text" id="toAcc" name="toAcc" value="<%= myAccount %>">
+        </div>
+       </div>
+       <div class="form-group">
+        <label for="privateKey" class="col-sm-3">Amount to send</label>
+        <div class="col-sm-9">
+         <input class="form-control" type="text" id="amount" name="amount" value= "<%= amount %>">
+        </div>
+       </div>
+     </fieldset>
+  </form>
+  <fieldset>
+    <h4> <%= result  %> </h4>
+   </fieldset>
+  <div class="buttons col-sm-12">
+    <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">New Account</a>
+  </div> <!-- container end -->
+
+ </body>
+</html>

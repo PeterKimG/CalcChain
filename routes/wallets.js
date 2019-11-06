@@ -72,48 +72,16 @@ router.get("/:username", util.isLoggedin, function (req, res) {
 });
 
 //account.signTransaction
-// router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
-//     User.findOne({ _id: req.user._id }, function (err, user) {
-//         if (err) return res.json(err);
-//         var toAcc = req.query.toAcc;
-//         var fromAcc = req.query.fromAcc;
-//         var amount = req.query.amount;
-//         var data = req.query.data;
-//         Wallet.findOne(req.body)
-//             .populate("owner")
-//             .exec(function (err, wallet) {
-//                 res.render("wallet/sendTx", {
-//                     user: user,
-//                     wallet: wallet,
-//                     myAccount,
-//                     toAcc,
-//                     fromAcc,
-//                     amount,
-//                     data,
-//                     method: "get"
-//                 });
-//             });
-//     })
-// });
-
-router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
-    req.body.owner = req.user._id;
+router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
     User.findOne({ _id: req.user._id }, function (err, user) {
         if (err) return res.json(err);
         var toAcc = req.query.toAcc;
         var fromAcc = req.query.fromAcc;
         var amount = req.query.amount;
         var data = req.query.data;
-        Wallet.findOne({privateKey:req.body.privateKey})
+        Wallet.findOne(req.body)
             .populate("owner")
-            .exec(async function (err, wallet) {
-                var sendTx = await Web3.eth.accounts.signTransaction({
-                    to: toAcc,
-                    value: amount,
-                    gas: 21000,
-                }, wallet.privateKey)
-                .then(console.log)
-                let result = console.log(sendTx);
+            .exec(function (err, wallet) {
                 res.render("wallet/sendTx", {
                     user: user,
                     wallet: wallet,
@@ -122,13 +90,47 @@ router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
                     fromAcc,
                     amount,
                     data,
+                    method: "get"
+                });
+            });
+    })
+});
+
+router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
+    req.body.owner = req.user._id;
+    // console.log(req.body)
+    User.findOne({ _id: req.user._id }, function (err, user) {
+        if (err) return res.json(err);
+        var toAcc = req.body.toAcc;
+        var fromAcc = req.body.fromAcc;
+        var amount = req.body.amount;
+        var data = req.body.data;
+        var pKey = req.body.privateKey;
+        Wallet.findOne(req.body)
+            .populate("owner")
+            .exec(async function (err, wallet) {
+            if (err) return res.json(err);
+                let sendTx = await Web3.eth.accounts.signTransaction({
+                    to: toAcc,
+                    value: amount,
+                    gas: 21000,
+                }, pKey)
+                .then(console.log)
+                let result = console.log(sendTx);
+                res.render("wallet/sendTx2", {
+                    user: user,
+                    myAccount,
+                    toAcc,
+                    fromAcc,
+                    amount,
+                    data,
+                    pKey,
                     result,
                     method: "post"
                 });
             });
     })
 });
-
 
 router.get("/:username/new", util.isLoggedin, function (req, res) {
     var wallet = req.flash("wallet")[0] || {};
@@ -154,7 +156,6 @@ router.post("/", util.isLoggedin, function (req, res) {
     req.body.owner = req.user._id;
     User.findOne({ _id: req.user._id }, function (err, user) {
         if (err) return res.json(err);
-
         Wallet.create(req.body, function (err, wallet) {
             if (err) {
                 req.flash("wallet", req.body);
