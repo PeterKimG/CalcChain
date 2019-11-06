@@ -72,29 +72,29 @@ router.get("/:username", util.isLoggedin, function (req, res) {
 });
 
 //account.signTransaction
-router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
-    User.findOne({ _id: req.user._id }, function (err, user) {
-        if (err) return res.json(err);
-        var toAcc = req.query.toAcc;
-        var fromAcc = req.query.fromAcc;
-        var amount = req.query.amount;
-        var data = req.query.data;
-        Wallet.findOne(req.body)
-            .populate("owner")
-            .exec(async function (err, wallet) {
-                res.render("wallet/sendTx", {
-                    user: user,
-                    wallet: wallet,
-                    myAccount,
-                    toAcc,
-                    fromAcc,
-                    amount,
-                    data,
-                    method: "get"
-                });
-            });
-    })
-});
+// router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
+//     User.findOne({ _id: req.user._id }, function (err, user) {
+//         if (err) return res.json(err);
+//         var toAcc = req.query.toAcc;
+//         var fromAcc = req.query.fromAcc;
+//         var amount = req.query.amount;
+//         var data = req.query.data;
+//         Wallet.findOne(req.body)
+//             .populate("owner")
+//             .exec(function (err, wallet) {
+//                 res.render("wallet/sendTx", {
+//                     user: user,
+//                     wallet: wallet,
+//                     myAccount,
+//                     toAcc,
+//                     fromAcc,
+//                     amount,
+//                     data,
+//                     method: "get"
+//                 });
+//             });
+//     })
+// });
 
 router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
     req.body.owner = req.user._id;
@@ -104,18 +104,17 @@ router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
         var fromAcc = req.query.fromAcc;
         var amount = req.query.amount;
         var data = req.query.data;
-        Wallet.findOne(req.body)
+        Wallet.findOne({privateKey:req.body.privateKey})
             .populate("owner")
             .exec(async function (err, wallet) {
                 var sendTx = await Web3.eth.accounts.signTransaction({
                     to: toAcc,
                     value: amount,
                     gas: 21000,
-                    data: data
                 }, wallet.privateKey)
                 .then(console.log)
                 let result = console.log(sendTx);
-                res.render("wallet/sendTx2", {
+                res.render("wallet/sendTx", {
                     user: user,
                     wallet: wallet,
                     myAccount,
