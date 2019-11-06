@@ -50,24 +50,25 @@ router.get("/", util.isLoggedin, function (req, res) {
 
 router.get("/:username", util.isLoggedin, function (req, res) {
     req.body.owner = req.user._id;
-    User.findOne({ _id: req.user._id },  function (err, user) {
+    User.findOne({ _id: req.user._id }, function (err, user) {
         if (err) {
             return res.json(err);
         } else {
             Wallet.findOne(req.body)
-            .populate("owner")
-            .exec(async function (err, wallet) {
-                if (!wallet) {
-                    res.redirect('/wallet/:username/new')
-                } else {
-                    res.render("wallet/wallet", {
-                        user: user,
-                        wallet: wallet,
-                        balance: await Web3.eth.getBalance(`${wallet.address}`)
-                    });
+                .populate("owner")
+                .exec(async function (err, wallet) {
+                    if (!wallet) {
+                        res.redirect('/wallet/:username/new')
+                    } else {
+                        res.render("wallet/wallet", {
+                            user: user,
+                            wallet: wallet,
+                            balance: await Web3.eth.getBalance(`${wallet.address}`)
+                        });
+                    }
                 }
-            }
-        )}
+                )
+        }
     })
 });
 
@@ -109,104 +110,109 @@ router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
         Wallet.findOne(req.body)
             .populate("owner")
             .exec(async function (err, wallet) {
-            if (err) return res.json(err);
+                if (err) return res.json(err);
                 let sendTx = await Web3.eth.accounts.signTransaction({
                     to: toAcc,
                     value: amount,
                     gas: 21000,
-                }, pKey)
-                .then(console.log)
-                let result = console.log(sendTx);
-                res.render("wallet/sendTx2", {
-                    user: user,
-                    myAccount,
-                    toAcc,
-                    fromAcc,
-                    amount,
-                    data,
-                    pKey,
-                    result,
-                    method: "post"
+                }, pKey, async function (err, result) {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                    let result2 = console.log(`rawTransaction ${result.rawTransaction}`);
+                    await Web3.eth.sendSignedTransaction(result.rawTransaction).on('receipt', console.log);
+                    res.render("wallet/sendTx2", {
+                        user: user,
+                        myAccount,
+                        toAcc,
+                        fromAcc,
+                        amount,
+                        data,
+                        pKey,
+                        result2,
+                        method: "post"
+                    });
                 });
             });
-    })
-});
+        })
+    });
 
-router.get("/:username/new", util.isLoggedin, function (req, res) {
-    var wallet = req.flash("wallet")[0] || {};
-    var errors = req.flash("errors")[0] || {};
-    let newAccount = Web3.eth.accounts.create('')
-    let { address, privateKey } = newAccount
-    // console.log(newAccount)
-    // console.log(address)
-    // console.log(privateKey)
-    User.findOne({ username: req.params.username }, function (err, user) {
-        if (err) return res.json(err);
-        return res.render("wallet/new", {
-            user: user,
-            address,
-            privateKey,
-            wallet: wallet,
-            errors: errors
+    router.get("/:username/new", util.isLoggedin, function (req, res) {
+        var wallet = req.flash("wallet")[0] || {};
+        var errors = req.flash("errors")[0] || {};
+        let newAccount = Web3.eth.accounts.create('')
+        let { address, privateKey } = newAccount
+        // console.log(newAccount)
+        // console.log(address)
+        // console.log(privateKey)
+        User.findOne({ username: req.params.username }, function (err, user) {
+            if (err) return res.json(err);
+            return res.render("wallet/new", {
+                user: user,
+                address,
+                privateKey,
+                wallet: wallet,
+                errors: errors
+            });
         });
     });
-});
 
-router.post("/", util.isLoggedin, function (req, res) {
-    req.body.owner = req.user._id;
-    User.findOne({ _id: req.user._id }, function (err, user) {
-        if (err) return res.json(err);
-        Wallet.create(req.body, function (err, wallet) {
-            if (err) {
-                req.flash("wallet", req.body);
-                req.flash("errors", util.parseError(err));
-                return res.redirect(`/wallet/${user.username}`);
+    router.post("/", util.isLoggedin, function (req, res) {
+        req.body.owner = req.user._id;
+        User.findOne({ _id: req.user._id }, function (err, user) {
+            if (err) return res.json(err);
+            Wallet.create(req.body, function (err, wallet) {
+                if (err) {
+                    req.flash("wallet", req.body);
+                    req.flash("errors", util.parseError(err));
+                    return res.redirect(`/wallet/${user.username}`);
+                }
+                res.redirect(`/wallet/${user.username}`);
+            });
+        });
+    });
+
+
+    //Web3.eth.getBalance(myAddress).then(console.log) //잔액조회
+
+    //console.log(Web3.eth.getBalance(myAddress)) // 잔액조회
+
+    //Web3.eth.getAccounts().then(console.log); //계좌조회
+
+    //console.log(Web3.eth.accounts.create('',function(password){'123'})); // 계정생성
+
+    //app.listen(3000, () => console.log('Example app listening on port 3000!'))
+
+    //console.log(Web3.eth.accounts.encrypt('0x42f0ac9a647fabdb1e12685f2bf0cc186868b1cca1edeeffca2e89ebd9f240d4','123'))
+
+    //Web3.eth.personal.unlockAccount('0x3E8f4390728643ce0a3675a3AAEA6439A275827E','123', 600).then(console.log('Account unlocked!'));
+
+    //console.log(Web3.eth.personal.unlockAccount('0xb3bd0Cb1567EF9De5AB16A24E6233F0A6c7aB03F','123', 600))
+
+    module.exports = router;
+
+    //Functions
+    function parseError(errors) {
+        var parsed = {};
+        if (errors.name == 'ValidationError') {
+            for (var name in errors.errors) {
+                var validationError = errors.errors[name];
+                parsed[name] = { message: validationError.message }
             }
-            res.redirect(`/wallet/${user.username}`);
-        });
-    });
-});
-
-
-//Web3.eth.getBalance(myAddress).then(console.log) //잔액조회
-
-//console.log(Web3.eth.getBalance(myAddress)) // 잔액조회
-
-//Web3.eth.getAccounts().then(console.log); //계좌조회
-
-//console.log(Web3.eth.accounts.create('',function(password){'123'})); // 계정생성
-
-//app.listen(3000, () => console.log('Example app listening on port 3000!'))
-
-//console.log(Web3.eth.accounts.encrypt('0x42f0ac9a647fabdb1e12685f2bf0cc186868b1cca1edeeffca2e89ebd9f240d4','123'))
-
-//Web3.eth.personal.unlockAccount('0x3E8f4390728643ce0a3675a3AAEA6439A275827E','123', 600).then(console.log('Account unlocked!'));
-
-//console.log(Web3.eth.personal.unlockAccount('0xb3bd0Cb1567EF9De5AB16A24E6233F0A6c7aB03F','123', 600))
-
-module.exports = router;
-
-//Functions
-function parseError(errors) {
-    var parsed = {};
-    if (errors.name == 'ValidationError') {
-        for (var name in errors.errors) {
-            var validationError = errors.errors[name];
-            parsed[name] = { message: validationError.message }
+        } else if (errors.code == "11000" && errors.errmsg.indexOf("username") > 0) {
+            parsed.username = { message: "This username already exists!" };
+        } else {
+            parsed.unhandled = JSON.stringify(errors);
         }
-    } else if (errors.code == "11000" && errors.errmsg.indexOf("username") > 0) {
-        parsed.username = { message: "This username already exists!" };
-    } else {
-        parsed.unhandled = JSON.stringify(errors);
+        return parsed;
     }
-    return parsed;
-}
 
-// private function 
-function checkPermission(req, res, next) {
-    User.findOne({ username: req.params.username }, function (err, user) {
-        if (err) return res.json(err);
-        if (user.id != req.user.id) return util.noPermission(req, res);
-        next();
-    });
-};
+    // private function 
+    function checkPermission(req, res, next) {
+        User.findOne({ username: req.params.username }, function (err, user) {
+            if (err) return res.json(err);
+            if (user.id != req.user.id) return util.noPermission(req, res);
+            next();
+        });
+    }
