@@ -96,7 +96,7 @@ router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
     })
 });
 
-router.post("/:username", util.isLoggedin, function (req, res) {
+router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
     req.body.owner = req.user._id;
     User.findOne({ _id: req.user._id }, function (err, user) {
         if (err) return res.json(err);
