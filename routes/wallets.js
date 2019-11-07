@@ -66,8 +66,7 @@ router.get("/:username", util.isLoggedin, function (req, res) {
                             balance: await Web3.eth.getBalance(`${wallet.address}`)
                         });
                     }
-                }
-                )
+                })
         }
     })
 });
@@ -84,13 +83,7 @@ router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
             .populate("owner")
             .exec(function (err, wallet) {
                 res.render("wallet/sendTx", {
-                    user: user,
-                    wallet: wallet,
-                    myAccount,
-                    toAcc,
-                    fromAcc,
-                    amount,
-                    data,
+                    user: user, wallet: wallet, myAccount, toAcc, fromAcc, amount, data,
                     method: "get"
                 });
             });
@@ -114,25 +107,30 @@ router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
                 let sendTx = await Web3.eth.accounts.signTransaction({
                     to: toAcc,
                     value: amount,
-                    gas: 21000,
+                    gas: 210000,
+                    data: '0x'+ Buffer.from(`${data}`).toString('hex')
                 }, pKey, async function (err, result) {
                     if (err) {
                         console.error(err);
                         return;
                     }
-                    let result2 = console.log(`rawTransaction ${result.rawTransaction}`);
-                    await Web3.eth.sendSignedTransaction(result.rawTransaction).on('receipt', console.log);
-                    res.render("wallet/sendTx2", {
-                        user: user,
-                        myAccount,
-                        toAcc,
-                        fromAcc,
-                        amount,
-                        data,
-                        pKey,
-                        result2,
-                        method: "post"
-                    });
+                    // console.log(`rawTransaction ${result.rawTransaction}`);
+                    // console.log(result);
+                    let result2 = result
+                    await Web3.eth.sendSignedTransaction(result.rawTransaction, async function (err, result3) {
+                        if (err) {
+                            console.error(err);
+                            return;
+                        } else {
+                            // console.log(result3);
+                        let result4 = result3;
+                        res.render("wallet/sendTx2", {
+                            user: user, myAccount, toAcc, fromAcc, amount, data, pKey, result2, result4,
+                            balance: await Web3.eth.getBalance(`${fromAcc}`),
+                            method: "post"
+                        });
+                        }
+                    });  
                 });
             });
         })
