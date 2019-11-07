@@ -100,7 +100,7 @@ router.put("/:username", util.isLoggedin, checkPermission, function(req, res, ne
     }
     res.redirect("/users/"+user.username);  });
   });
- });
+});
 
 module.exports = router;
 

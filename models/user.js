@@ -27,15 +27,18 @@ var userSchema = mongoose.Schema({
     match:[/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/,"응 틀렸어"],
     trim:true},
 
-//  privateKey:{
-//     type:String, 
-//     match:[/^(0x|0X)[a-fA-F0-9]+$/,"응 틀렸어"],
-//     trim:true},
- 
-//  account:{
-//     type:String, 
-//     match:[/^(0x|0X)[a-fA-F0-9]+$/,"응 틀렸어"],
-//     trim:true}
+ account:{
+    type:String, 
+    match:[/^(0x|0X)[a-fA-F0-9]+$/,"응 틀렸어"],
+    trim:true,
+    unique:true},
+
+ privateKey:{
+    type:String, 
+    match:[/^(0x|0X)[a-fA-F0-9]+$/,"응 틀렸어"],
+    trim:true,
+    unique:true}
+
 },{
  toObject:{virtuals:true}
 });

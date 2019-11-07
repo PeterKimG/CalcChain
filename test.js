@@ -8,3 +8,4 @@ console.log(text);
 console.log(bufferText.toString());
 
 console.log('0x'+Buffer.from('hello world').toString('hex'));
+console.log('jfkdlsjfkldsjdsklfjsdlf')
