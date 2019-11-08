@@ -10,9 +10,9 @@
 
       <div class="buttons">
         <a class="btn btn-default" href="/wallet">Back</a>
-        <% if(isAuthenticated && wallet.owner && currentUser.id == wallet.owner.id){ %>
+        <% if(isAuthenticated && hash.sender && currentUser.id == hash.sender.id){ %>
         <!-- 1 -->
-        <a class="btn btn-default" href="/wallet/<%= wallet.owner %>/edit">go my wallet</a>
+        <a class="btn btn-default" href="/wallet/<%= hash.sendername %>/edit">go my wallet</a>
         <% } %>
         <!-- 1 -->
       </div>
@@ -21,30 +21,22 @@
         <div class="contentBox">
           <h3 class="contentBoxTop"><%= user.username %> account</h3>
           <fieldset>
-            <div class="form-group">
-              <label for="account" class="col-sm-3">Account</label>
-              <div class="col-sm-9">
-                <input class="form-control" type="text" id="account" name="account" 
-                value="<%= wallet.address %>" readonly> 
-              </div>
-            </div>
-            <div class="form-group">
-                <label for="account" class="col-sm-3">Balance</label>
                 <div class="col-sm-9">
-                  <input class="form-control" type="text" id="balance" name="balance" 
-                  value="<%= balance %>" disabled> 
-                </div>
-              </div>
+        
+                        <h4>- list of transaction history</h4>
+                        <ul>
+                          <% for (var i = 0; i < length; i++) { %>
+                            <li>
+                              <%= i+1 + ': ' + hash[i].hashes %><br/><br/>
+                            </li>
+                          <% } %>
+                        </ul>
+                
+                        </div>
 
-            <div class="form-group">
-              <label for="privateKey" class="col-sm-3">privateKey</label>
-              <div class="col-sm-9">
-                <input class="form-control" type="text" id="privateKey" name="privateKey"
-                  value="<%= wallet.privateKey %>" disabled>
-              </div>
-            </div>
           </fieldset>
         </div>
+        <p><%= hash.hashes %></p>
       </form>
       <div class="buttons col-sm-12"> 
         <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">New Account</a>

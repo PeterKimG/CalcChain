@@ -39,25 +39,31 @@ router.get("/", util.isLoggedin, function (req, res) {
 });
 
 router.get("/:username/history", util.isLoggedin, function (req, res) {
-    req.body.owner = req.user._id;
+    req.body.sender = req.user._id;
     User.findOne({ _id: req.user._id }, function (err, user) {
         if (err) {
             return res.json(err);
         } else {
-            console.log(req.body)
             Wallet.findOne(req.body)
                 .populate("owner")
-                .exec(async function (err, wallet) {
+                .exec(function (err, wallet) {
                     if (err) {
                         res.redirect('/wallet/:username/new')
                     } else {
-                          res.render("wallet/txhistory", {
-                            user: user,
-                            wallet: wallet,
-                            balance: await Web3.eth.getBalance(`${wallet.address}`)
-                        });
-                    }
-                })
+                        Hash.find(req.body, async function (err, hash) {
+                            if(err) return res.status(500).json({error: err});
+                            if(!hash) return res.status(404).json({error: 'Hash not found'});
+                            // console.log(hash[0].hashes)
+                            let length = hash.length;
+                            res.render("wallet/txhistory", {
+                                user: user,
+                                wallet: wallet,
+                                hash:hash,
+                                length
+                        })
+                    });
+                }
+            })
         }
     })
 });
