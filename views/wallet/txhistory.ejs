@@ -27,7 +27,7 @@
                         <ul>
                           <% for (var i = 0; i < length; i++) { %>
                             <li>
-                              <%= i+1 + ': ' + hash[i].hashes %><br/><br/>
+                              <a href = "https://ropsten.etherscan.io/tx/<%= hash[i].hashes %>"><%= i+1 + ': ' + hash[i].hashes %></a><br/><br/>
                             </li>
                           <% } %>
                         </ul>
