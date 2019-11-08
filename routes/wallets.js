@@ -3,6 +3,7 @@ var router = express.Router();
 var User = require("../models/user");
 var util = require("../util");
 var Wallet = require("../models/wallet")
+var Hash = require("../models/hash")
 const web3 = require('web3');
 const Tx = require('ethereumjs-tx');
 
@@ -35,6 +36,30 @@ router.get("/", util.isLoggedin, function (req, res) {
             if (err) return res.json(err);
             res.render("wallet/index", { wallet: wallet });
         });
+});
+
+router.get("/:username/history", util.isLoggedin, function (req, res) {
+    req.body.owner = req.user._id;
+    User.findOne({ _id: req.user._id }, function (err, user) {
+        if (err) {
+            return res.json(err);
+        } else {
+            console.log(req.body)
+            Wallet.findOne(req.body)
+                .populate("owner")
+                .exec(async function (err, wallet) {
+                    if (err) {
+                        res.redirect('/wallet/:username/new')
+                    } else {
+                          res.render("wallet/txhistory", {
+                            user: user,
+                            wallet: wallet,
+                            balance: await Web3.eth.getBalance(`${wallet.address}`)
+                        });
+                    }
+                })
+        }
+    })
 });
 
 // router.get("/:username", util.isLoggedin, function (req, res) {
@@ -73,8 +98,12 @@ router.get("/:username", util.isLoggedin, function (req, res) {
 
 //account.signTransaction
 router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
+    var hash = req.flash("hash")[0] || {};
+    var errors = req.flash("errors")[0] || {};
     User.findOne({ _id: req.user._id }, function (err, user) {
+        console.log(req.user.username);
         if (err) return res.json(err);
+        var sender = req.user.username;
         var toAcc = req.query.toAcc;
         var fromAcc = req.query.fromAcc;
         var amount = req.query.amount;
@@ -83,7 +112,7 @@ router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
             .populate("owner")
             .exec(function (err, wallet) {
                 res.render("wallet/sendTx", {
-                    user: user, wallet: wallet, myAccount, toAcc, fromAcc, amount, data,
+                    user: user, wallet: wallet, myAccount, toAcc, fromAcc, amount, data, hash, sender,
                     method: "get"
                 });
             });
@@ -117,18 +146,30 @@ router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
                     // console.log(`rawTransaction ${result.rawTransaction}`);
                     // console.log(result);
                     let result2 = result
-                    await Web3.eth.sendSignedTransaction(result.rawTransaction, async function (err, result3) {
+                    await Web3.eth.sendSignedTransaction(result.rawTransaction, function (err, result3) {
                         if (err) {
                             console.error(err);
                             return;
                         } else {
                             // console.log(result3);
                         let result4 = result3;
-                        res.render("wallet/sendTx2", {
-                            user: user, myAccount, toAcc, fromAcc, amount, data, pKey, result2, result4,
-                            balance: await Web3.eth.getBalance(`${fromAcc}`),
-                            method: "post"
+                        let hash = new Hash({
+                            hashes: result4,
+                            sender: user._id,
+                            sendername: user.username
                         });
+                        hash.save(async function (err, hash) {
+                            if (err) {
+                                req.flash("hash", req.body);
+                                req.flash("errors", util.parseError(err));
+                                return console.error(err);
+                            }
+                            res.render("wallet/sendTx2", {
+                                user: user, myAccount, toAcc, fromAcc, amount, data, pKey, result2, result4,
+                                balance: await Web3.eth.getBalance(`${fromAcc}`),
+                                method: "post"
+                            });
+                        })
                         }
                     });  
                 });
