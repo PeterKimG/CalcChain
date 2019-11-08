@@ -1,0 +1,33 @@
+ganache-cli : 블록체인을 쉽게 사용해볼수 있는 테스트 툴
+truffle : A world class development environment, testing framework and asset pipeline for blockchains using the Ethereum Virtual Machine (EVM), aiming to make life as a developer easier.
+트러플 안에는 web3가 주입이 되어있다
+migration.sol : 스마트컨트랙트 버전관리 해주는 역할, 직접적으로는 안건드는게 좋음
+truffle(development) : truffle console 을 통해 개발자모드로 들어갈 수 있으며 탭두번을 통해 명령어들을 볼 수 있다 ex)web3. 탭두번
+openzepplin :이더리움 스마트컨트랙트 쪽에서 젤 많이쓰는 오픈소스 컨트랙트 라이브러리 모음
+
+----dapp 서비스 설계 ----
+1.지갑 관리
+2.아키텍쳐
+    a. smart contract -front
+    b. smart contract -server - front
+3.코드
+    a. 코드 실행시 비용 발생
+    b. 권한 관리
+    c. 비즈니스 로직 업데이트
+    d. 데이터 마이그레이션
+4.운영
+    a. public
+    b. private 
+
+----Ethereum 수수료----
+gas(gasLimit)
+gasPrice
+ETH 
+수수료=gas(21000)*gasPrice(1gwei==10^9wei)
+21000000000000 wei=0.000021 ETH
+1 ETH = 10^18wei
+---Gas 계산---
+-32byte 새로 저장==20000gas 
+블록체인에서 비용 많이드는것 = 용량 늘리는 연산
+-32byte 기존 변수에 있는 값을 바꿀 때 = 5000gas
+(기존 변수 초기화해서 쓰지 않을때 -> 10000gas return)
