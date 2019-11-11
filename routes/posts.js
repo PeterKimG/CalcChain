@@ -84,7 +84,7 @@ module.exports = router;
 
 // private function
 function checkPermission(req, res, next) {
-  Post,findOne({_id:req.params.id}, function(err, post) {
+  Post.findOne({_id:req.params.id}, function(err, post) {
     if(err) return res.json(err);
     if(post.author != req.user.id) return util.noPermission(req, res);
 

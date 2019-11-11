@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <% include ../partials/head %>
+ </head>
+ <body>
+  <% include ../partials/nav %>
+
+  <div class="container post post-index">
+   <% include ./partials/header ﻿%>
+
+   <div class="buttons">
+    <% if(isAuthenticated){ %> <!-- 1 -->
+     <a class="btn btn-default" href="/posts/new">New</a>
+    <% } %> <!-- 1 -->
+   </div>
+
+   <table class="table table-striped posts">
+    <thead>
+     <tr>
+      <th class="title2">originalname</th>
+      <th class="title2">filehash</th>
+      <th class="author">uploadername</th>
+      <th class="date">Date</th>
+     </tr>
+    </thead>
+    <tbody>
+     <% if(fileinfoes == null || fileinfoes.length == 0){ %>
+      <tr>
+       <td class="noData" colspan=100> There is no data to show :( </td>
+      </tr>
+     <% } %>
+
+
+     <% fileinfoes.forEach(function(Fileinfo) { %>
+      <tr>
+       <td class="originalname">
+        <a href="/uploads/<%= fileinfoes._id %>"><div class="ellipsis"><%= fileinfoes.originalname %></div></a>
+       </td>
+       <td class="filehash">
+        <div class="ellipsis"><%= fileinfoes.filehash %></div>
+        </td>
+       <td class="uploadername">
+           <div class="ellipsis"><%= fileinfoes.uploader %></div>
+       </td>
+       <td class="date">
+        <%= fileinfo.createdDate %>
+       </td>
+      </tr>
+     <% }) %>
+    </tbody>
+   </table>
+  </div> <!-- container end -->
+ </body>
+</html>

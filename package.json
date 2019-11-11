@@ -52,6 +52,7 @@
     "web3": "^1.2.1"
   },
   "devDependencies": {
+    "crypto": "^1.0.1",
     "solc": "^0.5.11"
   }
 }

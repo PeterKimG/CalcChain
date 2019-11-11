@@ -17,9 +17,10 @@
     <ul class="nav navbar-nav navbar-right"> <!-- 1 -->
       <% if(isAuthenticated){ %>
         <li><a href="/users/<%= currentUser.username %>">My Info</a></li>
-        <li><a href="/users/account/<%= currentUser.username %>">My Account</a></li>
+        <!-- <li><a href="/users/account/<%= currentUser.username %>">My Account</a></li> -->
         <li><a href="/wallet/<%= currentUser.username %>">Wallet</a></li>
         <li><a href="/uploads/<%= currentUser.username %>">File upload</a></li>
+        <li><a href="/uploads/<%= currentUser.username %>">File Tx</a></li>
         <li><a href="/logout">Logout</a></li>
        <% } else { %>
         <li><a href="/users/new">Sign Up</a></li>

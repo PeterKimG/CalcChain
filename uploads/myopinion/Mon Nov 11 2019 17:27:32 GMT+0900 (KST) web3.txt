@@ -1,0 +1,8 @@
+console.log(web3js.eth.accounts.create())
+
+{ address: '0xcEd9d4Fae504f0377821DdaD48cd7F3B73832e32',
+  privateKey: '0x35366e4045b92b8a010f4c785a7b238b7c0609697590626a942d17d039388680',
+  signTransaction: [Function: signTransaction],
+  sign: [Function: sign],
+  encrypt: [Function: encrypt] }
+

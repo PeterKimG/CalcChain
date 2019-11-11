@@ -61,7 +61,7 @@ app.use("/posts", require("./routes/posts"));
 app.use("/users", require("./routes/users"));
 app.use("/wallet", require("./routes/wallets"));
 app.use("/uploads", require("./routes/uploads"));
-
+app.use("/corrects", require("./routes/corrects"));
 
 // Port setting
 var port = 3000
