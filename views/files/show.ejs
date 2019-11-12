@@ -36,7 +36,8 @@
             <li><div class="post-body">Original file name is "<%= fileinfo.originalname %>"</div></li>
             <li><div class="post-body">Saved filename is "<%= fileinfo.filename %>"</div></li>
             <li><div class="post-body">Extracted file hash value is "<%= fileinfo.filehash %>"</div></li>
-            <li><div class="post-body">Trasaction hash value sended with file hash value"<%= fileinfo.Txhash %>"</div></li>
+            <li><div class="post-body">Trasaction hash value sended with file hash value"
+                <a href="https://ropsten.etherscan.io/tx/<%= fileinfo.Txhash %>"><%= fileinfo.Txhash %>"</div></li></a>
         </ul>
      </div> <!-- col end-->
     </div> <!-- row end -->
