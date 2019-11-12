@@ -116,7 +116,7 @@ form .form-group-wallet{
 
 /* post style */
 .post {
-  max-width: 670px;
+  max-width: 1000px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
 }
@@ -291,4 +291,27 @@ form .form-group-wallet{
   -webkit-transform: translateX(50%);
   -ms-transform: translateX(50%);
   transform: translateX(50%)
+}
+
+
+/* fileinfo table style */
+.post .posts .originalname{
+  text-align: center;
+  width: 400px;
+}
+
+.post .posts .filehash{
+  text-align: center;
+  width: 400px;
+}
+
+.post .posts .author{
+  text-align: center;
+  width: 110px;
+}
+
+.post .posts .date{
+  text-align: center;
+  width: 90px;
+  padding-right: 15px;
 }
