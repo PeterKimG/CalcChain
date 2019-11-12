@@ -76,7 +76,7 @@ router.post('/:username', upload.single('userfile'), function(req, res){
                                     console.error(err);
                                     return;
                                 } else {
-                                    console.log(result3);
+                                    let result4 = result3;
                                     let fileinfo = new Fileinfo({
                                         uploader: user._id,
                                         uploadername: user.username,
@@ -96,7 +96,8 @@ router.post('/:username', upload.single('userfile'), function(req, res){
                                             user,
                                             filename,
                                             originalname,
-                                            filetype   
+                                            filetype,
+                                            result4
                                         })
                                     })
                                 }
@@ -117,5 +118,14 @@ router.get("/:username/fileinfo", function(req, res){
       res.render("files/index", {fileinfoes:fileinfoes});
     });
   });
+
+router.get("/fileinfo/:id", function(req, res){
+    Fileinfo.findOne({_id:req.params.id})
+    .populate("uploader")
+    .exec(function(err, fileinfo){
+        if(err) return res.json(err);
+        res.render("files/show", {fileinfo:fileinfo});
+    });
+});
 
 module.exports = router;

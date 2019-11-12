@@ -6,6 +6,7 @@ var Wallet = require("../models/wallet")
 var Hash = require("../models/hash")
 const web3 = require('web3');
 const Tx = require('ethereumjs-tx');
+var Fileinfo = require("../models/fileinfo")
 
 const myAccount = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
 //Infura HttpProvider Endpoint
@@ -107,7 +108,7 @@ router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
     var hash = req.flash("hash")[0] || {};
     var errors = req.flash("errors")[0] || {};
     User.findOne({ _id: req.user._id }, function (err, user) {
-        console.log(req.user.username);
+        // console.log(req.user.username);
         if (err) return res.json(err);
         var sender = req.user.username;
         var toAcc = req.query.toAcc;
@@ -183,40 +184,42 @@ router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
         })
     });
 
-    router.get("/:username/new", util.isLoggedin, function (req, res) {
-        var wallet = req.flash("wallet")[0] || {};
-        var errors = req.flash("errors")[0] || {};
-        let newAccount = Web3.eth.accounts.create('')
-        let { address, privateKey } = newAccount
-        // console.log(newAccount)
-        // console.log(address)
-        // console.log(privateKey)
-        User.findOne({ username: req.params.username }, function (err, user) {
-            if (err) return res.json(err);
-            return res.render("wallet/new", {
-                user: user,
-                address,
-                privateKey,
-                wallet: wallet,
-                errors: errors
-            });
+router.get("/:username/new", util.isLoggedin, function (req, res) {
+    var wallet = req.flash("wallet")[0] || {};
+    var errors = req.flash("errors")[0] || {};
+    let newAccount = Web3.eth.accounts.create('')
+    let { address, privateKey } = newAccount
+    // console.log(newAccount)
+    // console.log(address)
+    // console.log(privateKey)
+    User.findOne({ username: req.params.username }, function (err, user) {
+        if (err) return res.json(err);
+        return res.render("wallet/new", {
+            user: user,
+            address,
+            privateKey,
+            wallet: wallet,
+            errors: errors
         });
     });
+});
 
-    router.post("/", util.isLoggedin, function (req, res) {
-        req.body.owner = req.user._id;
-        User.findOne({ _id: req.user._id }, function (err, user) {
-            if (err) return res.json(err);
-            Wallet.create(req.body, function (err, wallet) {
-                if (err) {
-                    req.flash("wallet", req.body);
-                    req.flash("errors", util.parseError(err));
-                    return res.redirect(`/wallet/${user.username}`);
-                }
-                res.redirect(`/wallet/${user.username}`);
-            });
+router.post("/", util.isLoggedin, function (req, res) {
+    req.body.owner = req.user._id;
+    User.findOne({ _id: req.user._id }, function (err, user) {
+        if (err) return res.json(err);
+        Wallet.create(req.body, function (err, wallet) {
+            if (err) {
+                req.flash("wallet", req.body);
+                req.flash("errors", util.parseError(err));
+                return res.redirect(`/wallet/${user.username}`);
+            }
+            res.redirect(`/wallet/${user.username}`);
         });
     });
+});
+
+
 
 
     //Web3.eth.getBalance(myAddress).then(console.log) //잔액조회

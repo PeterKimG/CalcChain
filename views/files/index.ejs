@@ -35,7 +35,7 @@
      <% fileinfoes.forEach(function(Fileinfo) { %>
       <tr>
        <td class="originalname">
-        <a href="/uploads/<%= Fileinfo._id %>"><div class="ellipsis"><%= Fileinfo.originalname %></div></a>
+        <a href="/uploads/fileinfo/<%= Fileinfo._id %>"><div class="ellipsis"><%= Fileinfo.originalname %></div></a>
        </td>
 
        <td class="filehash">
@@ -45,7 +45,7 @@
        <td class="author">
            <div class="ellipsis"><%= Fileinfo.uploadername %></div>
        </td>
-       
+
        <td class="date">
         <%= Fileinfo.createdDate %>
        </td>

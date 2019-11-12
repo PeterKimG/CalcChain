@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <% include ../partials/head %>
+ </head>
+ <body>
+  <% include ../partials/nav %>
+
+  <div class="container post post-show">
+   <% include ./partials/header %>
+
+   <div class="buttons">
+    <a class="btn btn-default" href="/uploads">Back</a>
+    <% if(isAuthenticated && fileinfo.uploader && currentUser.id == fileinfo.uploader.id){ %>
+      <a class="btn btn-default" href="/uploads/<%= fileinfo._id %>/edit">Edit</a>
+      <form action="/uploads/<%= fileinfo._id %>?_method=delete" method="post">
+        <a class="btn btn-default" href="#" onclick="confirm('Do you want to delete this?')?this.parentElement.submit():null;">Delete</a>
+      </form>
+    <% } %>
+  </div>
+
+   <div class="contentBox">
+    <h3 class="contentBoxTop"><%= fileinfo.originalname %></h3>
+    <div class="row">
+     <div class="col-sm-4 col-sm-push-8">
+      <div class="post-info">
+       <div><span>Uploader</span> : <%= fileinfo.uploader ? fileinfo.uploader.username : "" %></div> <!-- 1 -->
+       <div><span>Created</span> : <%= fileinfo.createdDate %> <%= fileinfo.createdTime %></div>
+       <!-- <% if(fileinfo.updatedAt) { %>
+        <div><span>Updated</span> : <%= fileinfo.updatedDate %> <%= fileinfo.updatedTime %></div>
+       <% } %> -->
+      </div> <!-- post-info end -->
+     </div> <!-- col end-->
+     <div class="col-sm-8 col-sm-pull-4">
+        <ul>
+            <li><div class="post-body">Original file name is "<%= fileinfo.originalname %>"</div></li>
+            <li><div class="post-body">Saved filename is "<%= fileinfo.filename %>"</div></li>
+            <li><div class="post-body">Extracted file hash value is "<%= fileinfo.filehash %>"</div></li>
+            <li><div class="post-body">Trasaction hash value sended with file hash value"<%= fileinfo.Txhash %>"</div></li>
+        </ul>
+     </div> <!-- col end-->
+    </div> <!-- row end -->
+   </div> <!-- post-container end -->
+
+  </div> <!-- container end -->
+ </body>
+</html>
