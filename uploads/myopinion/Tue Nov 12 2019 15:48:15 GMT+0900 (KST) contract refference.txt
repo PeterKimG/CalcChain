@@ -1,0 +1,60 @@
+How To: Write a Simple Smart Contract
+(simple sending message contract)
+
+https://medium.com/coinmonks/how-to-write-a-simple-smart-contract-25f6d3c1d6db
+
+How To: Compile a Solidity Smart Contract Using Node.js
+
+https://medium.com/coinmonks/how-to-compile-a-solidity-smart-contract-using-node-js-51ea7c6bf440
+
+How To: Test A Smart Contract Using The Mocha Testing Framework
+
+https://medium.com/@morganfogarty/how-to-test-a-smart-contract-using-the-mocha-testing-harness-e700913ec26c
+
+How To: Compile a Solidity Smart Contract Using Node.js
+
+https://medium.com/coinmonks/how-to-compile-a-solidity-smart-contract-using-node-js-51ea7c6bf440
+
+Deploying A Smart Contract, The Hard Way
+(simple sending data contract)
+
+https://medium.com/@gus_tavo_guim/deploying-a-smart-contract-the-hard-way-8aae778d4f2a
+
+
+Ethereum DApps without truffle: compile; deploy; use it :)
+
+https://medium.com/@doart3/ethereum-dapps-without-truffle-compile-deploy-use-it-e6daeefcf919
+
+How to deploy the smart contract
+
+https://medium.com/hci-wvu/hello-world-in-solidity-3e7d3e025831
+
+
+
+
+Using Truffle to Create and Deploy Smart Contracts
+
+https://medium.com/@gus_tavo_guim/using-truffle-to-create-and-deploy-smart-contracts-95d65df626a2
+
+
+[Ethereum] 이더리움 스마트 컨트랙트 #1 - testrpc에 올리기
+
+출처: https://sancs.tistory.com/163 [상크스의 웹공간]
+
+
+
+
+
+
+
+
+
+Ethereum Tutorial: Sending Transaction via NodeJS Backend
+
+https://medium.com/coinmonks/ethereum-tutorial-sending-transaction-via-nodejs-backend-7b623b885707
+
+
+
+스마트 컨트랙트 개발 준비하기 - 개발 과정
+
+https://winterj.me/prepare_smart_contract_deploying/
