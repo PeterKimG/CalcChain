@@ -97,7 +97,8 @@ router.post('/:username', upload.single('userfile'), function(req, res){
                                             filename,
                                             originalname,
                                             filetype,
-                                            result4
+                                            result4,
+                                            fileHash
                                         })
                                     })
                                 }
@@ -122,9 +123,13 @@ router.get("/:username/fileinfo", function(req, res){
 router.get("/fileinfo/:id", function(req, res){
     Fileinfo.findOne({_id:req.params.id})
     .populate("uploader")
-    .exec(function(err, fileinfo){
+    .exec(async function(err, fileinfo){
         if(err) return res.json(err);
-        res.render("files/show", {fileinfo:fileinfo});
+        await Web3.eth.getTransaction(fileinfo.Txhash, function(err, result){
+            let result2 = result.input;
+            res.render("files/show", {fileinfo:fileinfo, result2});
+        })
+
     });
 });
 
