@@ -315,3 +315,22 @@ form .form-group-wallet{
   width: 90px;
   padding-right: 15px;
 }
+.post .file-info{
+  font-size: 11px;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #E4E4E4;
+  border: 0 solid black;
+  border-radius: 5px;
+}
+.post .file-info>div{
+  padding: 5px 0;
+  border-top: 1px dotted #999;
+}
+.post .file-info>div:first-child{
+  border-top: none;
+}
+.post .file-info span{
+  display: inline-block;
+  width: 45px;
+}

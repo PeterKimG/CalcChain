@@ -1,0 +1,11 @@
+1. privateKey save as a txt or json file on user's pc
+
+2. import while file uploading or sending Tx privateKey file from user's pc
+
+3. check the file hash value with saved file aleady.
+
+4. realization calander form for manage files for monthly or something.
+
+5. visual update.
+
+6. to send Tx when file upload, using a token or prepared contract.
