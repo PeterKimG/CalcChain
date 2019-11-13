@@ -47,7 +47,6 @@ router.post('/:username', upload.single('userfile'), function(req, res){
             .populate("owner")
             .exec(async function (err, wallet) {
                 if (err) return res.json(err);
-                console.log(wallet);
                 let filename = req.file.filename;
                 let originalname = req.file.originalname;
                 let filetype = req.file.mimetype;
@@ -58,6 +57,7 @@ router.post('/:username', upload.single('userfile'), function(req, res){
                     if (data) {
                         hash.update(data);
                     } else {
+                        console.log(wallet);
                         let fileHash = hash.digest('hex')
                         // console.log(`${hash.digest('hex')}`);
                         let sendTx = await Web3.eth.accounts.signTransaction({

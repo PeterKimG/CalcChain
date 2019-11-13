@@ -33,7 +33,7 @@ app.use(flash());
 //session password
 app.use(session({
   secret:"myopinion", 
-  resave: true, 
+  resave: false, 
   saveUninitialized: true,
   // store: require('mongoose-session')(mongoose)
 }))
