@@ -8,4 +8,10 @@
 
 5. visual update.
 
-6. to send Tx when file upload, using a token or prepared contract.
+6. to send Tx when file upload, using a token or prepared contract.]
+
+7. etherscan api?
+
+8. open zeppline https://medium.com/@newid/%EB%B0%9C%EB%B2%88%EC%97%AD-truffle%EA%B3%BC-openzeppelin%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%98%EC%97%AC-%ED%86%A0%ED%81%B0%EA%B3%BC-ico%EC%9A%A9-contract%EB%A5%BC-%EC%83%9D%EC%84%B1%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95-8bca3803f9f4
+
+9. azuer, aws, gcp

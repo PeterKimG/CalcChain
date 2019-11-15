@@ -1,0 +1,31 @@
+mongo db atlas
+-> mongoose, mongoose-session 이용
+
+
+body-parser, method-override, connect-flash
+
+express, express-session: custom middleware. login check, pull user information.
+
+multer: file upload module
+
+passport, passport-local: 로그인 cookie, session 관여. local-strategy 사용. 추후 naver, facebook 등 이용 예정
+
+web3.js: ethereum wallet account create, signTransaction, sendSignedTransaction, getBalance. 이용.
+
+etherscan 연동, 자료조회.
+
+ethereum testnet: ropsten.infura.io 이용
+
+bcrypt.js: user password 저장시 암호화.
+
+clipboard.js: 읽기전용 내부 정보를 회원에게 복사기능을 제공하기 위함.
+
+ejs: page rendering
+
+fs: file system. 파일관련 기능 이용.
+
+crypto: file md5 hash extract module.
+
+
+
+https://github.com/PeterKimG/calcchain

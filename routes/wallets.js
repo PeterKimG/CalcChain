@@ -235,27 +235,27 @@ router.post("/", util.isLoggedin, function (req, res) {
 
     module.exports = router;
 
-    //Functions
-    function parseError(errors) {
-        var parsed = {};
-        if (errors.name == 'ValidationError') {
-            for (var name in errors.errors) {
-                var validationError = errors.errors[name];
-                parsed[name] = { message: validationError.message }
-            }
-        } else if (errors.code == "11000" && errors.errmsg.indexOf("username") > 0) {
-            parsed.username = { message: "This username already exists!" };
-        } else {
-            parsed.unhandled = JSON.stringify(errors);
+//Functions
+function parseError(errors) {
+    var parsed = {};
+    if (errors.name == 'ValidationError') {
+        for (var name in errors.errors) {
+            var validationError = errors.errors[name];
+            parsed[name] = { message: validationError.message }
         }
-        return parsed;
+    } else if (errors.code == "11000" && errors.errmsg.indexOf("username") > 0) {
+        parsed.username = { message: "This username already exists!" };
+    } else {
+        parsed.unhandled = JSON.stringify(errors);
     }
+    return parsed;
+}
 
-    // private function 
-    function checkPermission(req, res, next) {
-        User.findOne({ username: req.params.username }, function (err, user) {
-            if (err) return res.json(err);
-            if (user.id != req.user.id) return util.noPermission(req, res);
-            next();
-        });
-    }
+// private function 
+function checkPermission(req, res, next) {
+    User.findOne({ username: req.params.username }, function (err, user) {
+        if (err) return res.json(err);
+        if (user.id != req.user.id) return util.noPermission(req, res);
+        next();
+    });
+}
