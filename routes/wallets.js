@@ -81,7 +81,7 @@ router.get("/:username", util.isLoggedin, function (req, res) {
                     if (!wallet) {
                         res.redirect('/wallet/:username/new')
                     } else {
-                        
+                        console.log(req.body)
                         res.render("wallet/wallet", {
                             user: user,
                             wallet: wallet,
@@ -95,16 +95,21 @@ router.get("/:username", util.isLoggedin, function (req, res) {
 
 //account.signTransaction
 router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
+    req.body.owner = req.user._id;
     var hash = req.flash("hash")[0] || {};
     var errors = req.flash("errors")[0] || {};
     User.findOne({ _id: req.user._id }, function (err, user) {
-        // console.log(req.user.username);
-        if (err) return res.json(err);
+        if (err) {
+            return res.json(err);
+        } else {
         var sender = req.user.username;
         var toAcc = req.query.toAcc;
         var fromAcc = req.query.fromAcc;
         var amount = req.query.amount;
         var data = req.query.data;
+        console.log(req.body);
+        
+        
         Wallet.findOne(req.body)
             .populate("owner")
             .exec(function (err, wallet) {
@@ -115,6 +120,7 @@ router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
                     method: "get"
                 });
             });
+        }
     })
 });
 
