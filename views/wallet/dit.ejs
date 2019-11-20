@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <% include ../partials/nav %>
+
+    <div class="container txhistory post-index">
+        <% include ./partials/header ﻿%>
+
+        <div class="buttons">
+            <% if(isAuthenticated){ %>
+            <a class="btn btn-default" href="/wallet/<%= hashes.sendername %>/sendTx">Send new Tx</a>
+            <% } %>
+        </div>
+
+        <table class="table table-striped posts">
+            <thead>
+                <tr>
+                    <th class="number">#</th>
+                    <th class="txhash">Transaction hash value</th>
+                    <th class="date">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(hashes == null || hashes.length == 0){ %>
+                <tr>
+                    <td class="noData" colspan=100> There is no data to show  </td>
+                </tr>
+                <% } %>
+
+
+                <% hashes.forEach(function(element, index, Hash) { %>
+                <tr>
+                    <td class="number">
+                        <div class="ellipsis">
+                                <%= hashes.length - index %>
+                        </div>
+                    </td>
+
+                    <td class="txhash">
+                        <a href="https://ropsten.etherscan.io/tx/<%= Hash.hashes %>">
+                            <div class="ellipsis"><%= element.hashes %></div>
+                        </a>
+                    </td>
+
+                    <td class="date">
+                        <%= element.createdDate %>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <div class="buttons col-sm-12">
+                <a class="btn btn-primary" href="/wallet/<%= hashes.sendername %>/new">New Account</a>
+                <a class="btn btn-primary" data-clipboard-target="#account">Copy address</a>
+                <a class="btn btn-primary" href="https://faucet.ropsten.be">Get faucet</a>
+                <a class="btn btn-primary" href="/wallet/<%= hashes.sendername %>/sendTx">Send Tx</a>
+            </div> <!-- container end -->
+    
+    </div> <!-- container end -->
+
+</body>
+
+</html>

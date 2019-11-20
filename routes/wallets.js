@@ -40,34 +40,47 @@ router.get("/", util.isLoggedin, function (req, res) {
 });
 
 router.get("/:username/history", util.isLoggedin, function (req, res) {
-    req.body.sender = req.user._id;
-    User.findOne({ _id: req.user._id }, function (err, user) {
-        if (err) {
-            return res.json(err);
-        } else {
-            Wallet.findOne(req.body)
-                .populate("owner")
-                .exec(function (err, wallet) {
-                    if (err) {
-                        res.redirect('/wallet/:username/new')
-                    } else {
-                        Hash.find(req.body, async function (err, hash) {
-                            if(err) return res.status(500).json({error: err});
-                            if(!hash) return res.status(404).json({error: 'Hash not found'});
-                            // console.log(hash[0].hashes)
-                            let length = hash.length;
-                            res.render("wallet/txhistory", {
-                                user: user,
-                                wallet: wallet,
-                                hash:hash,
-                                length
-                        })
-                    });
-                }
-            })
-        }
-    })
+    console.log(req.session)
+    Hash.find({ sender: req.session.passport.user })
+    .populate("sender")
+    .sort("-createdAt")            // 1
+    .exec(function(err, hashes){    // 1
+    if(err) return res.json(err);
+    // let length = hashes.length
+    res.render("wallet/dit", {hashes:hashes});
+    });
 });
+
+
+// router.get("/:username/history", util.isLoggedin, function (req, res) {
+//     req.body.sender = req.user._id;
+//     User.findOne({ _id: req.user._id }, function (err, user) {
+//         if (err) {
+//             return res.json(err);
+//         } else {
+//             Wallet.findOne(req.body)
+//                 .populate("owner")
+//                 .exec(function (err, wallet) {
+//                     if (err) {
+//                         res.redirect('/wallet/:username/new')
+//                     } else {
+//                         Hash.find(req.body, async function (err, hash) {
+//                             if(err) return res.status(500).json({error: err});
+//                             if(!hash) return res.status(404).json({error: 'Hash not found'});
+//                             // console.log(hash[0].hashes)
+//                             let length = hash.length;
+//                             res.render("wallet/txhistory", {
+//                                 user: user,
+//                                 wallet: wallet,
+//                                 hash:hash,
+//                                 length
+//                         })
+//                     });
+//                 }
+//             })
+//         }
+//     })
+// });
 
 router.get("/:username", util.isLoggedin, function (req, res) {
     req.body.owner = req.user._id;

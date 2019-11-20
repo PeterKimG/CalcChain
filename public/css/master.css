@@ -334,3 +334,87 @@ form .form-group-wallet{
   display: inline-block;
   width: 45px;
 }
+
+/* txhistory table css */
+.txhistory {
+  max-width: 850px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+}
+
+.txhistory h2 {
+  color: rgb(85, 85, 85);
+  text-align: center;
+}
+.txhistory .post-body {
+  white-space: pre-line;
+  padding: 6px 15px 20px;
+}
+.txhistory .post-info{
+  font-size: 11px;
+  margin: 5px;
+  padding: 5px 10px;
+  background-color: #E4E4E4;
+  border: 0 solid black;
+  border-radius: 5px;
+}
+.txhistory .post-info>div{
+  padding: 5px 0;
+  border-top: 1px dotted #999;
+}
+.txhistory .post-info>div:first-child{
+  border-top: none;
+}
+.txhistory .post-info span{
+  display: inline-block;
+  width: 40px;
+}
+.post-index .posts{
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  table-layout: fixed;
+}
+.txhistory .posts th,
+.txhistory .posts td
+{
+  padding: 7px 5px;
+}
+.txhistory .posts th:first-child,
+.txhistory .posts td:first-child
+{
+  padding-left: 15px;
+}
+.txhistory .posts thead{
+  background-color: #F5F5F5;
+}
+.txhistory .posts thead tr th{
+  border-bottom: 1px solid #ccc;
+}
+.txhistory .posts tbody tr:nth-child(odd){
+  background-color: rgb(249, 248, 255);
+}
+.txhistory .posts tbody .noData{
+  background-color: #FFFFFF;
+  text-align: center;
+}
+
+/* .txhistory .title{
+  text-align: center;
+  width: 35px;
+} */
+
+.txhistory .posts .number{
+  text-align: center;
+  width: 40px;
+}
+
+.txhistory .posts .txhash{
+  text-align: center;
+  width: 500px;
+}
+
+.txhistory .posts .date{
+  text-align: center;
+  width: 90px;
+  padding-right: 15px;
+}
