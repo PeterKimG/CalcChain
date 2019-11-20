@@ -32,7 +32,7 @@
                 <label for="account" class="col-sm-3">Balance</label>
                 <div class="col-sm-9">
                   <input class="form-control" type="text" id="balance" name="balance" 
-                  value="<%= balance %>" disabled> 
+                  value="<%= balanceEth %> Ether" disabled> 
                 </div>
               </div>
 
@@ -49,13 +49,32 @@
       <div class="buttons col-sm-12"> 
         <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">New Account</a>
         <a class="btn btn-primary" data-clipboard-target="#account">Copy address</a>
-        <a class="btn btn-primary" href="https://faucet.ropsten.be">Get faucet</a>
+        <a class="btn btn-primary" id="faucet">Get faucet</a>
         <a class="btn btn-primary" href="/wallet/<%= user.username %>/sendTx">Send Tx</a>
         <a class="btn btn-primary" href="/wallet/<%= user.username %>/history">Tx history</a>
       </div> <!-- container end -->
 
 </body>
 <script>
+  $('#faucet').click(function () {
+            let account = $('#account').val()         
+            $.ajax({
+                type: 'POST',
+                url: 'https://faucet.metamask.io',
+                data: account,
+                success: function (body) {
+                    alert('요청성공')},
+                error: function ({ status }) {
+                    if (status === 429) {
+                        alert('충분한 금액을 가지고 있거나 요청이 많습니다. 잠시후에 다시 시도해주세요.')
+                    }
+                    if (status === 500) {
+                        alert('서버 에러')
+                    }
+                }
+            })  
+        })
+
   var clipboard = new Clipboard('.btn');
   var btns = document.querySelectorAll('.btn');
   for (var i = 0; i < btns.length; i++) {

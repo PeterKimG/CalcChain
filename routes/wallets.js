@@ -40,7 +40,6 @@ router.get("/", util.isLoggedin, function (req, res) {
 });
 
 router.get("/:username/history", util.isLoggedin, function (req, res) {
-    console.log(req.session)
     Hash.find({ sender: req.session.passport.user })
     .populate("sender")
     .sort("-createdAt")            // 1
@@ -95,11 +94,14 @@ router.get("/:username", util.isLoggedin, function (req, res) {
                         res.redirect('/wallet/:username/new')
                     } else {
                         console.log(req.body)
-                        res.render("wallet/wallet", {
-                            user: user,
-                            wallet: wallet,
-                            balance: await Web3.eth.getBalance(`${wallet.address}`)
-                        });
+                        await Web3.eth.getBalance(`${wallet.address}`, function (err, wei) {
+                            balanceEth = Web3.utils.fromWei(wei, 'ether')
+                            res.render("wallet/wallet", {
+                                user: user,
+                                wallet: wallet,
+                                balanceEth
+                            });
+                        })
                     }
                 })
         }
