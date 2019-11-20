@@ -32,9 +32,6 @@ router.get("/:username", util.isLoggedin, function(req, res){
         } else {
         fs.readdir(`uploads/${req.user.username}`, 'utf8' , function (error, filelist) {
             var length = filelist.length
-            console.log(req.body);
-
-            console.log(req.session);
             Wallet.findOne(req.body)
                 .populate("owner")
                 .exec(function (err, wallet) {
@@ -64,7 +61,7 @@ router.post('/:username', util.isLoggedin, upload.single('userfile'), function(r
         let filetype = req.file.mimetype;
         const myAccount = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
         let pKey = req.body.privateKey;
-        console.log(req.session.passport.user)
+        // console.log(req.session.passport.user)
         const dbValue = req.session.passport.user
         const data = {
             'owner': dbValue
