@@ -35,12 +35,17 @@ router.get("/:username", util.isLoggedin, function(req, res){
             Wallet.findOne(req.body)
                 .populate("owner")
                 .exec(function (err, wallet) {
+                    console.log(user);
                     res.render("files/uploads", {user:user, filelist, length, wallet:wallet});
                 });
             })
         }
     });
 });
+
+router.get("/:username/download", util.isLoggedin, function(req, res) {
+
+})
 
 var _storage = multer.diskStorage({
     destination : function (req, file, cb) {
