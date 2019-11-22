@@ -14,10 +14,45 @@
       <% } %>
      </div>
 
+     <table class="table table-striped posts">
+      <thead>
+          <tr>
+              <th class="number">#</th>
+              <th class="txhash">File name</th>
+              <!-- <th class="date">Date</th> -->
+          </tr>
+      </thead>
+      <tbody>
+          <% if(filelist == null || filelist.length == 0){ %>
+          <tr>
+              <td class="noData" colspan=100> There is no file to show  </td>
+          </tr>
+          <% } %>
 
-    
-    
-    </form>
+
+          <% filelist.forEach(function(element, index, File) { %>
+          <tr>
+              <td class="number">
+                  <div class="ellipsis">
+                          <%= length - index %>
+                  </div>
+              </td>
+
+              <td class="txhash">
+                  <a href="../../uploads/<%= user.username %>/<%= element %>" download>
+                    <div class="ellipsis"><%= element %></div>
+                  </a>
+              </td>
+
+              <!-- <td class="date">
+                  <%= element.createdDate %>
+              </td> -->
+          </tr>
+          <% }) %>
+      </tbody>
+  </table>
+   
+    <!-- </form>
    <form class="user-form form-horizontal" action="/uploads" method="post">
     <div class="contentBox">
      <h3 class="contentBoxTop"><%= user.username %>'s File Managing</h3>
@@ -36,7 +71,8 @@
         </div>
      </fieldset>
     </div>
-   </form>
+   </form> -->
+
    <form class="buttons" method='post' enctype="multipart/form-data">
     <div class="upload">
     <input class='btn btn-default' type='file' style="float:left" name='userfile'>
