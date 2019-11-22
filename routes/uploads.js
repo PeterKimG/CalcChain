@@ -62,7 +62,7 @@ router.post('/:username', util.isLoggedin, upload.single('userfile'), function(r
         const myAccount = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
         let pKey = req.body.privateKey;
         // console.log(req.session.passport.user)
-        const dbValue = req.session.passport.user
+        const dbValue = req.session.passport.user;
         const data = {
             'owner': dbValue
         }
@@ -151,7 +151,6 @@ router.get("/fileinfo/:id", function(req, res){
             let result2 = result.input;
             res.render("files/show", {fileinfo:fileinfo, result2});
         })
-
     });
 });
 

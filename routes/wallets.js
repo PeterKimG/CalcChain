@@ -192,12 +192,12 @@ router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
                                 method: "post"
                             });
                         })
-                        }
-                    });  
-                });
+                    }
+                });  
             });
-        })
-    });
+        });
+    })
+});
 
 router.get("/:username/new", util.isLoggedin, function (req, res) {
     var wallet = req.flash("wallet")[0] || {};
