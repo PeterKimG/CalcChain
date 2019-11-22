@@ -1,71 +1,91 @@
 <!DOCTYPE html>
 <html>
- <head>
+
+<head>
   <% include ../partials/head %>
- </head>
- <body>
+</head>
+
+<body>
   <% include ../partials/nav %>
 
   <div class="container user user-show">
 
     <div class="buttons">
       <a class="btn btn-default" href="/wallet">Back</a>
-      <% if(isAuthenticated && wallet.owner && currentUser.id == wallet.owner.id){ %> <!-- 1 -->
-       <a class="btn btn-default" href="/<%= wallet.owner %>/edit">go my wallet</a>
-      <% } %> <!-- 1 -->
-     </div>
-
-   <form class="user-form form-horizontal" action="/wallet/<%= wallet.owner %>/sendTx" method="post">
-    <div class="contentBox">
-     <h3 class="contentBoxTop"><%= user.username %> account</h3>
-     <fieldset>
-      <div class="form-group">
-        <label for="account" class="col-sm-3">Account</label>
-        <div class="col-sm-9">
-         <input class="form-control" type="text" id="account" name="account" value="<%= wallet.address %>" readonly>
-        </div>
-       </div>
-       <div class="form-group">
-        <label for="privateKey" class="col-sm-3">privateKey</label>
-        <div class="col-sm-9">
-         <input class="form-control" type="text" id="privateKey" name="privateKey" value="<%= wallet.privateKey %>" readonly>
-        </div>
-       </div>
-     </fieldset>
-     <fieldset>
-      <div class="form-group">
-        <label for="account" class="col-sm-3">Account from</label>
-        <div class="col-sm-9">
-         <input class="form-control" type="text" id="fromAcc" name="fromAcc" value="<%= wallet.address %>"> <p>default value is your primary account</p>
-        </div>
-       </div>
-       <div class="form-group">
-        <label for="privateKey" class="col-sm-3">Account to</label>
-        <div class="col-sm-9">
-         <input class="form-control" type="text" id="toAcc" name="toAcc" value="<%= myAccount %>">  <p>default value is administrator's</p>
-        </div>
-       </div>
-       <div class="form-group">
-        <label for="privateKey" class="col-sm-3">Amount to send</label>
-        <div class="col-sm-9">
-         <input class="form-control" type="text" id="amount" name="amount" placeholder="type either">
-        </div>
-       </div>
-       <div class="form-group">
-        <label for="privateKey" class="col-sm-3">Message data</label>
-        <div class="col-sm-9">
-         <input class="form-control" type="text" id="data" name="data" placeholder="type message you want to send">
-        </div>
-       </div>
-       <div class="buttons submit-container">
-        <button type="submit" class="btn btn-default">Send</button>
-      </div>
-     </fieldset>
+      <% if(isAuthenticated && wallet.owner && currentUser.id == wallet.owner.id){ %>
+      <!-- 1 -->
+      <a class="btn btn-default" href="/<%= wallet.owner %>/edit">go my wallet</a>
+      <% } %>
+      <!-- 1 -->
     </div>
-  </form>
-  <div class="buttons col-sm-12">
-    <a class="btn btn-primary" href="/wallet/<%= wallet.owner %>/new">New Account</a>
-  </div> <!-- container end -->
 
- </body>
+    <form class="user-form form-horizontal" action="/wallet/<%= wallet.owner %>/sendTx" method="post">
+      <div class="contentBox">
+        <h3 class="contentBoxTop"><%= user.username %> account</h3>
+        <fieldset>
+          <div class="form-group">
+            <label for="account" class="col-sm-3">Account</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" id="account" name="account" value="<%= wallet.address %>"
+                readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="privateKey" class="col-sm-3">privateKey</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" id="privateKey" name="privateKey" value="<%= wallet.privateKey %>"
+                readonly>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="form-group">
+            <label for="account" class="col-sm-3">Account from</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" id="fromAcc" name="fromAcc" value="<%= wallet.address %>">
+              <p>default value is your primary account</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="privateKey" class="col-sm-3">Account to</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" id="toAcc" name="toAcc" value="<%= myAccount %>">
+              <p>default value is administrator's</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="privateKey" class="col-sm-3">Amount to send</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" id="amount" name="amount" placeholder="type either">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="privateKey" class="col-sm-3">Message data</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" id="data" name="data" placeholder="type message you want to send">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="privateKey" class="col-sm-3">privateKey pass</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" id="passForKey" name="passForKey"
+                placeholder="type your password for privateKey">
+            </div>
+          </div>
+          <div class="buttons submit-container">
+            <button type="submit" class="btn btn-default">Send</button>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+    <form class="buttons" method='post' enctype="multipart/form-data">
+      <div class="upload">
+        <input class='btn btn-default' type='file' style="float:left" name='jsonKey'>
+        <input class="btn btn-default" type='submit' style="float:right">
+      </div>
+    </form>
+
+
+</body>
+
 </html>

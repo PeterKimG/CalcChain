@@ -19,3 +19,14 @@
 10. ipfs
 
 https://expressjs.com/ko/starter/static-files.html
+
+
+11. file version and hacked or not checking
+
+12. blockchain thing. on this page with contract
+racio and safety value.
+
+faucet https://teth.bitaps.com/
+
+13. jquery로 제출한 file을 read 해서 object에 담아서, 
+back에서는 variable 에 담아서 post로 처리

@@ -1,12 +1,13 @@
 var express = require("express");
 var router = express.Router();
+var multer = require('multer');
 var User = require("../models/user");
 var util = require("../util");
 var Wallet = require("../models/wallet")
 var Hash = require("../models/hash")
 const web3 = require('web3');
 const Tx = require('ethereumjs-tx');
-var Fileinfo = require("../models/fileinfo")
+var fs = require("fs")
 
 const myAccount = "0xdee5F53B29FDB3996fb546026fDdf49adc6D4a89"
 //Infura HttpProvider Endpoint
@@ -122,16 +123,15 @@ router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
         var fromAcc = req.query.fromAcc;
         var amount = req.query.amount;
         var data = req.query.data;
-        console.log(req.body);
-        
-        
+        var passForKey = req.query.passForKey;
         Wallet.findOne(req.body)
             .populate("owner")
             .exec(function (err, wallet) {
                 console.log(wallet);
                 console.log(req.body);
                 res.render("wallet/sendTx", {
-                    user: user, wallet: wallet, myAccount, toAcc, fromAcc, amount, data, hash, sender,
+                    user: user, wallet: wallet, myAccount, toAcc, fromAcc, amount, 
+                    data, hash, sender, passForKey,
                     method: "get"
                 });
             });
@@ -148,8 +148,10 @@ router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
         var fromAcc = req.body.fromAcc;
         var amount = req.body.amount;
         var data = req.body.data;
-        var pKey = req.body.privateKey;
-        
+        let priavteKey = fs.readFileSync(`${req.session.passport.user}_keystore.json`)
+        var passForKey = req.body.passForKey;
+        var pKey = Web3.eth.accounts.encrypt(privateKey, passForKey).privateKey;
+        console.log(pKey);
         Wallet.findOne(req.body)
             .populate("owner")
             .exec(async function (err, wallet) {
@@ -204,36 +206,60 @@ router.get("/:username/new", util.isLoggedin, function (req, res) {
     var errors = req.flash("errors")[0] || {};
     let newAccount = Web3.eth.accounts.create('')
     let { address, privateKey } = newAccount
+    console.log(req.session)
     // console.log(newAccount)
     // console.log(address)
     // console.log(privateKey)
-    User.findOne({ username: req.params.username }, function (err, user) {
+    User.findOne({ username: req.params.username }, async function (err, user) {
         if (err) return res.json(err);
         return res.render("wallet/new", {
             user: user,
             address,
             privateKey,
             wallet: wallet,
-            errors: errors
+            errors: errors,
         });
     });
 });
 
-router.post("/", util.isLoggedin, function (req, res) {
+router.post("/",util.isLoggedin, function (req, res){
+    console.log("file!")
+    let privateKey = req.body.privateKey;
+    let passForKey = req.body.passForKey;
+    let keystore = JSON.stringify(Web3.eth.accounts.encrypt(privateKey, passForKey));
+    res.setHeader('Content-disposition', `attachment; filename=${req.session.passport.user}_keystore.json`);
+    res.setHeader('Content-type', 'application/json');
     req.body.owner = req.user._id;
     console.log(req.body);
     User.findOne({ _id: req.user._id }, function (err, user) {
         if (err) return res.json(err);
         Wallet.create(req.body, function (err, wallet) {
             if (err) {
-                req.flash("wallet", req.body);
-                req.flash("errors", util.parseError(err));
-                return res.redirect(`/wallet/${user.username}`);
+                req.flash("wallet", req.body)
+            } else {
+                res.write(keystore, function (err) {
+                    res.end();
+                })
             }
-            res.redirect(`/wallet/${user.username}`);
-        });
-    });
-});
+        })
+    })
+})
+
+// router.post("/", util.isLoggedin, function (req, res) {
+//     req.body.owner = req.user._id;
+//     console.log(req.body);
+//     User.findOne({ _id: req.user._id }, function (err, user) {
+//         if (err) return res.json(err);
+//         Wallet.create(req.body, function (err, wallet) {
+//             if (err) {
+//                 req.flash("wallet", req.body);
+//                 req.flash("errors", util.parseError(err));
+//                 return res.redirect(`/wallet/${user.username}`);
+//             }
+//             res.redirect(`/wallet/${user.username}`);
+//         });
+//     });
+// });
 
 
 

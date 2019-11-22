@@ -43,9 +43,6 @@ router.get("/:username", util.isLoggedin, function(req, res){
     });
 });
 
-router.get("/:username/download", util.isLoggedin, function(req, res) {
-
-})
 
 var _storage = multer.diskStorage({
     destination : function (req, file, cb) {
@@ -71,8 +68,6 @@ router.post('/:username', util.isLoggedin, upload.single('userfile'), function(r
         const data = {
             'owner': dbValue
         }
-
-        
 
         Wallet.findOne(data)
             .populate("owner")

@@ -9,7 +9,7 @@
   <% include ../partials/nav %>
 
   <div class="container user user-show">
-    <form class="user-form form-horizontal" action="/wallet" method="post">
+    <form class="user-form form-horizontal" action="/wallet/" method="post">
       <div class="contentBox2">
         <h3 class="contentBoxTop"> account</h3>
         <fieldset>
@@ -33,13 +33,20 @@
               <% } %>
             </div>
           </div>
+          <div class="form-group-wallet <%= (errors.privateKey)?'has-error':'' %>">
+            <label for="privateKey" class="col-sm-6">Password for PrivateKey</label>
+            <div class="col-sm-9">
+              <input class="form-control-wallet" type="text" id="passForKey" name="passForKey" value="Please enter password">
+              <span class="help-block"></span>
+              </div>
+          </div>
         </fieldset>
         <br>
         New address is created on blockchain server side. Please save your address and key to click button down below. </br>
         And go to check it at your wallet page.
       </div>
       <div class="buttons submit-container">
-        <button type="submit" class="btn btn-default">Save</button>
+        <button type="submit" formmethod="POST" class="btn btn-default">Save and export PrivateKey</button>
       </div>
       <% if(errors.unhandled){ %>
       <div class="alert alert-danger">

@@ -2,6 +2,19 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"type": "node",
+			"request": "launch",
+			"name": "nodemon",
+			"runtimeExecutable": "nodemon",
+			"program": "${workspaceFolder}/index.js",
+			"restart": true,
+			"console": "integratedTerminal",
+			"internalConsoleOptions": "neverOpen",
+			"skipFiles": [
+				"<node_internals>/**"
+			]
+		},
+		{
 			"type": "totvs_language_debug",
 			"request": "launch",
 			"name": "Totvs Language Debug",
