@@ -57,7 +57,8 @@
 </body>
 <script>
   $('#faucet').click(function () {
-            let account = $('#account').val()         
+            let account = $('#account').val()
+            // alert(account)         
             $.ajax({
                 type: 'POST',
                 url: 'https://faucet.metamask.io',

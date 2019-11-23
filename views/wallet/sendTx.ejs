@@ -68,24 +68,60 @@
           <div class="form-group">
             <label for="privateKey" class="col-sm-3">privateKey pass</label>
             <div class="col-sm-9">
-              <input class="form-control" type="text" id="passForKey" name="passForKey"
-                placeholder="type your password for privateKey">
+              <input class="form-control" type="password" id="passForKey" name="passForKey" placeholder="type your password for privateKey">
             </div>
-          </div>
-          <div class="buttons submit-container">
-            <button type="submit" class="btn btn-default">Send</button>
-          </div>
+          </div> 
+          <div class="form-group" style="display:none">
+              <input type="text" id="editor" name="jsonKey">
+           </div>
+            
+          <form class="buttons" method='post' enctype="multipart/form-data">
+            <input class='btn btn-default' type='file' style="float:left" id='fileinput'/>
+            <input class="btn btn-default" type='button' id='btnLoad' value='Import' onclick='handleFileSelect();'>
+            <!-- <div id="editor"></div> -->
+            <!-- <div id="jsonKey"></div> -->
+            <div class="buttons submit-container">
+              <button type="submit" class="btn btn-default" style="float:right">Send</button>
+            </div>
+          </form>
+
         </fieldset>
       </div>
     </form>
-    <form class="buttons" method='post' enctype="multipart/form-data">
-      <div class="upload">
-        <input class='btn btn-default' type='file' style="float:left" name='jsonKey'>
-        <input class="btn btn-default" type='submit' style="float:right">
-      </div>
-    </form>
+    
+    <!-- https://codingmania.tistory.com/m/103?category=588253 -->
+    <script>
+      function handleFileSelect() {
+        if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+          alert('The File APIs are not fully supported in this browser.');
+          return;
+        }
 
+        input = document.getElementById('fileinput');
+        if (!input) {
+          alert("Um, couldn't find the jsonKey element.");
+        }
+        else if (!input.files) {
+          alert("This browser doesn't seem to support the `files` property of file inputs.");
+        }
+        else if (!input.files[0]) {
+          alert("Please select a file before clicking 'Load'");
+        }
+        else {
+          file = input.files[0];
+          fr = new FileReader();
+          fr.onload = receivedText;
+          fr.readAsText(file);
+          let jsonKey = fr.readAsText(file)
+          // fr.readAsDataURL(file);
+        }
+      }
 
+      function receivedText() {
+        document.getElementById('editor').value = fr.result;
+      } 
+
+    </script>
 </body>
 
 </html>

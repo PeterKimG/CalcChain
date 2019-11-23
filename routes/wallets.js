@@ -124,14 +124,13 @@ router.get("/:username/sendTx", util.isLoggedin, function (req, res) {
         var amount = req.query.amount;
         var data = req.query.data;
         var passForKey = req.query.passForKey;
+        var jsonKey = req.query.jsonKey;
         Wallet.findOne(req.body)
             .populate("owner")
             .exec(function (err, wallet) {
-                console.log(wallet);
-                console.log(req.body);
                 res.render("wallet/sendTx", {
                     user: user, wallet: wallet, myAccount, toAcc, fromAcc, amount, 
-                    data, hash, sender, passForKey,
+                    data, hash, sender, passForKey, jsonKey,
                     method: "get"
                 });
             });
@@ -148,15 +147,15 @@ router.post("/:username/sendTx", util.isLoggedin, function (req, res) {
         var fromAcc = req.body.fromAcc;
         var amount = req.body.amount;
         var data = req.body.data;
-        let priavteKey = fs.readFileSync(`${req.session.passport.user}_keystore.json`)
+        let jsonKey = req.body.jsonKey
         var passForKey = req.body.passForKey;
-        var pKey = Web3.eth.accounts.encrypt(privateKey, passForKey).privateKey;
-        console.log(pKey);
+        // console.log(req.body);
+        var pKey = Web3.eth.accounts.decrypt(jsonKey, passForKey).privateKey;
+        // console.log(pKey)
         Wallet.findOne(req.body)
             .populate("owner")
             .exec(async function (err, wallet) {
                 if (err) return res.json(err);
-                console.log(wallet);
                 let sendTx = await Web3.eth.accounts.signTransaction({
                     to: toAcc,
                     value: amount,
