@@ -31,6 +31,7 @@ router.get("/:username", util.isLoggedin, function(req, res){
             return res.json(err);
         } else {
         fs.readdir(`uploads/${req.user.username}`, 'utf8' , function (error, filelist) {
+            console.log(filelist)
             var length = filelist.length
             Wallet.findOne(req.body)
                 .populate("owner")
