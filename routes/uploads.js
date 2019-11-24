@@ -134,14 +134,26 @@ router.post('/:username', util.isLoggedin, upload.single('userfile'), function(r
 })
 
 router.get("/:username/fileinfo", function(req, res){
-    Fileinfo.find({})
-    .populate("uploader")
-    .sort("-createdAt")            // 1
-    .exec(function(err, fileinfoes){    // 1
-      if(err) return res.json(err);
-      res.render("files/index", {fileinfoes:fileinfoes});
-    });
-  });
+    var page = Math.max(1,req.query.page);
+    var limit = 20;
+    Fileinfo.count({}, function(err, count) {
+        if(err) return res.json({success:false, message:err});
+        var skip = (page-1)*limit;
+        var maxPage = Math.ceil(count/limit);
+        Fileinfo.find()
+        .populate("uploader")
+        .sort("-createdAt")
+        .skip(skip)
+        .limit(limit)            // 1
+        .exec(function(err, fileinfoes){    // 1
+            if(err) return res.json(err);
+            let user = req.user.username;
+            res.render("files/index", {
+                fileinfoes:fileinfoes, page:page, maxPage:maxPage, user
+            });
+        });
+    })
+});
 
 router.get("/fileinfo/:id", function(req, res){
     Fileinfo.findOne({_id:req.params.id})
@@ -150,7 +162,7 @@ router.get("/fileinfo/:id", function(req, res){
         if(err) return res.json(err);
         await Web3.eth.getTransaction(fileinfo.Txhash, function(err, result){
             let result2 = result.input;
-            res.render("files/show", {fileinfo:fileinfo, result2});
+            res.render("files/show", {fileinfo:fileinfo, page:req.query.page, result2});
         })
     });
 });

@@ -418,3 +418,10 @@ form .form-group-wallet{
   width: 90px;
   padding-right: 15px;
 }
+
+.pagination{
+  text-align: center;
+}
+.pagination li{
+  display: inline;
+}

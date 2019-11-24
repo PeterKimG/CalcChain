@@ -1,58 +1,76 @@
 <!DOCTYPE html>
 <html>
- <head>
-  <% include ../partials/head %>
- </head>
- <body>
-  <% include ../partials/nav %>
 
-  <div class="container post post-index">
-   <% include ./partials/header ﻿%>
+<head>
+    <% include ../partials/head %>
+</head>
 
-   <!-- <div class="buttons">
+<body>
+    <% include ../partials/nav %>
+
+    <div class="container post post-index">
+        <% include ./partials/header ﻿%>
+
+        <!-- <div class="buttons">
     <% if(isAuthenticated){ %> 
      <a class="btn btn-default" href="/posts/new">New</a>
     <% } %> 
    </div> -->
 
-   <table class="table table-striped posts">
-    <thead>
-     <tr>
-      <th class="title2">originalname</th>
-      <th class="title2">filehash</th>
-      <th class="author">uploadername</th>
-      <th class="date">Date</th>
-     </tr>
-    </thead>
-    <tbody>
-     <% if(fileinfoes == null || fileinfoes.length == 0){ %>
-      <tr>
-       <td class="noData" colspan=100> There is no data to show :( </td>
-      </tr>
-     <% } %>
+        <table class="table table-striped posts">
+            <thead>
+                <tr>
+                    <th class="title2">originalname</th>
+                    <th class="title2">filehash</th>
+                    <th class="author">uploadername</th>
+                    <th class="date">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(fileinfoes == null || fileinfoes.length == 0){ %>
+                <tr>
+                    <td class="noData" colspan=100> There is no data to show :( </td>
+                </tr>
+                <% } %>
 
 
-     <% fileinfoes.forEach(function(Fileinfo) { %>
-      <tr>
-       <td class="originalname">
-        <a href="/uploads/fileinfo/<%= Fileinfo._id %>"><div class="ellipsis"><%= Fileinfo.originalname %></div></a>
-       </td>
+                <% fileinfoes.forEach(function(Fileinfo) { %>
+                <tr>
+                    <td class="originalname">
+                        <a href="/uploads/fileinfo/<%= Fileinfo._id %>">
+                            <div class="ellipsis"><%= Fileinfo.originalname %></div>
+                        </a>
+                    </td>
 
-       <td class="filehash">
-        <div class="ellipsis"><%= Fileinfo.filehash %></div>
-        </td>
+                    <td class="filehash">
+                        <div class="ellipsis"><%= Fileinfo.filehash %></div>
+                    </td>
 
-       <td class="author">
-           <div class="ellipsis"><%= Fileinfo.uploadername %></div>
-       </td>
+                    <td class="author">
+                        <div class="ellipsis"><%= Fileinfo.uploadername %></div>
+                    </td>
 
-       <td class="date">
-        <%= Fileinfo.createdDate %>
-       </td>
-      </tr>
-     <% }) %>
-    </tbody>
-   </table>
+                    <td class="date">
+                        <%= Fileinfo.createdDate %>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+        <ul class="pagination">
+            <% var offset = 3; %>
+            <% for(i=1;i<=maxPage;i++){ %>
+            <% if(i<=offset || i>maxPage-offset || (i>=page-(offset-1) && i<=page+(offset-1))){ %>
+            <% if(i != page){ %>
+            <li><a href="/uploads/<%= user %>/fileinfo?page=<%= i %>"> <%= i %> </a></li>
+            <% } else { %>
+            <li> <b><%= i %></b> </li>
+            <% } %>
+            <% } else if(i == offset+1 || i == maxPage-offset){ %>
+            <li>...</li>
+            <% } %>
+            <%}%>
+      </ul>
   </div> <!-- container end -->
  </body>
 </html>
