@@ -10,7 +10,7 @@
    <% include ./partials/header %>
 
    <div class="buttons">
-    <a class="btn btn-default" href="/uploads/<%= fileinfo.uploadername %>/fileinfo?page=<%=page%>">Back</a>
+    <a class="btn btn-default" href="/uploads/<%= fileinfo.uploadername %>/fileinfo?<%=urlQuery%>">Back</a>
     <% if(isAuthenticated && fileinfo.uploader && currentUser.id == fileinfo.uploader.id){ %>
       <a class="btn btn-default" href="/uploads/<%= fileinfo._id %>/edit">Edit</a>
       <form action="/uploads/<%= fileinfo._id %>?_method=delete" method="post">

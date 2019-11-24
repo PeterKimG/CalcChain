@@ -20,10 +20,10 @@
         <table class="table table-striped posts">
             <thead>
                 <tr>
-                    <th class="title2">originalname</th>
-                    <th class="title2">filehash</th>
-                    <th class="author">uploadername</th>
-                    <th class="date">Date</th>
+                    <th class="title2">파일명</th>
+                    <th class="title2">파일해쉬</th>
+                    <th class="author">업로더</th>
+                    <th class="date">시간</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,11 +58,14 @@
             </tbody>
         </table>
         <ul class="pagination">
-            <% var offset = 3; %>
+            <% var offset = 3;
+            var partialQuery;
+            if(urlQuery) partialQuery = "&"+urlQuery.replace(/page=(.*?)(&|$)/ig,"");
+             %>
             <% for(i=1;i<=maxPage;i++){ %>
             <% if(i<=offset || i>maxPage-offset || (i>=page-(offset-1) && i<=page+(offset-1))){ %>
             <% if(i != page){ %>
-            <li><a href="/uploads/<%= user %>/fileinfo?page=<%= i %>"> <%= i %> </a></li>
+            <li><a href="/uploads/<%= user %>/fileinfo?page=<%= i %><%= partialQuery %>"> <%= i %> </a></li>
             <% } else { %>
             <li> <b><%= i %></b> </li>
             <% } %>
@@ -70,7 +73,27 @@
             <li>...</li>
             <% } %>
             <%}%>
-      </ul>
+        </ul>
   </div> <!-- container end -->
- </body>
+  <div class="search">
+        <div class="search float_right">
+          <form class="checkValidation" action="/uploads/<%= user %>/fileinfo/" id="search">
+            <select name="searchType">
+              <% var select %>
+            <option value="uploadername,originalname" <%= search.searchType=="title,body"?select="selected":"" %>>
+                업로더+파일명</option>
+            <option value="uploadername" <%= search.searchType=="title"?select="selected":"" %>>업로더</option>
+            <option value="originalname" <%= search.searchType=="body"?select="selected":"" %>>파일명</option>
+            </select>
+            <input class="cvMinLength" cvMinLength="3" cvMinLenErrTo="#searchError"
+                cvMinLenErrMsg="It should be at least 3 characters" type="text" name="searchText"
+                value="<%= select?search.searchText:"" %>">
+            <button type="submit">search</button>
+            <div class="message" id="searchError"></div>
+            </form>
+    </div>
+    </div>
+    </div>
+</body>
+
 </html>

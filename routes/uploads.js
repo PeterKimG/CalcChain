@@ -9,6 +9,7 @@ var hash = crypto.createHash('md5');
 const web3 = require('web3');
 var Fileinfo = require('../models/fileinfo');
 var Wallet = require("../models/wallet")
+var async = require('async')
 // var fd = fs.createReadStream('/ path and file name.name');
 
 //Infura HttpProvider Endpoint
@@ -134,26 +135,35 @@ router.post('/:username', util.isLoggedin, upload.single('userfile'), function(r
 })
 
 router.get("/:username/fileinfo", function(req, res){
-    var page = Math.max(1,req.query.page);
-    var limit = 20;
-    Fileinfo.count({}, function(err, count) {
-        if(err) return res.json({success:false, message:err});
-        var skip = (page-1)*limit;
-        var maxPage = Math.ceil(count/limit);
-        Fileinfo.find()
+    var page = Math.max(1,req.query.page)>1?parseInt(req.query.page):1;
+    var limit = Math.max(1,req.query.limit)>1?parseInt(req.query.limit):20;
+    var search = createSearch(req.query);
+    let user = req.user.username;
+    async.waterfall([function(callback) {
+        Fileinfo.count(search.findPost, function(err, count) {
+            if(err) callback;
+            var skip = (page-1)*limit;
+            var maxPage = Math.ceil(count/limit);
+            callback(null, skip, maxPage);
+            });
+    }, function(skip, maxPage, callback) {
+        Fileinfo.find(search.findPost)
         .populate("uploader")
         .sort("-createdAt")
         .skip(skip)
         .limit(limit)            // 1
         .exec(function(err, fileinfoes){    // 1
             if(err) return res.json(err);
-            let user = req.user.username;
             res.render("files/index", {
-                fileinfoes:fileinfoes, page:page, maxPage:maxPage, user
+                fileinfoes:fileinfoes, page:page, maxPage:maxPage,
+                user, urlQuery:req._parsedUrl.query, search:search
             });
         });
+    }], function(err){
+        if (err) return res.json({success:false, message:err});
     })
-});
+})
+
 
 router.get("/fileinfo/:id", function(req, res){
     Fileinfo.findOne({_id:req.params.id})
@@ -162,9 +172,27 @@ router.get("/fileinfo/:id", function(req, res){
         if(err) return res.json(err);
         await Web3.eth.getTransaction(fileinfo.Txhash, function(err, result){
             let result2 = result.input;
-            res.render("files/show", {fileinfo:fileinfo, page:req.query.page, result2});
+            res.render("files/show", {fileinfo:fileinfo, 
+                urlQuery:req._parsedUrl.query, result2,});
         })
     });
 });
 
 module.exports = router;
+
+function createSearch(queries){
+    var findPost = {};
+    if(queries.searchType && queries.searchText && queries.searchText.length >= 3){
+      var searchTypes = queries.searchType.toLowerCase().split(",");
+      var postQueries = [];
+      if(searchTypes.indexOf("uploadername")>=0){
+        postQueries.push({ uploadername : { $regex : new RegExp(queries.searchText, "i") } });
+      }
+      if(searchTypes.indexOf("originalname")>=0){
+        postQueries.push({ originalname : { $regex : new RegExp(queries.searchText, "i") } });
+      }
+      if(postQueries.length > 0) findPost = {$or:postQueries};
+    }
+    return { searchType:queries.searchType, searchText:queries.searchText,
+      findPost:findPost};
+  }

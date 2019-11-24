@@ -420,8 +420,60 @@ form .form-group-wallet{
 }
 
 .pagination{
+  float: center;
   text-align: center;
 }
 .pagination li{
+  float: center;
   display: inline;
+}
+
+.floats:after{
+  float: center;
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+  line-height: 0;
+  text-align: center;
+}
+.posts .index .search{
+  float: center;
+  height:40px;
+  text-align: center;
+}
+.posts .index .search select{
+  float: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  background-color: white;
+  padding: 0px 3px;
+  width: 70px;
+  height:19px;
+}
+.posts .index .search select::after{
+  content: "v";
+  text-align: center;
+}
+.posts .index .search input[type='text']{
+  float: center;
+  margin-left: 2px;
+  border: 1px solid #ccc;
+  border-radius: 0;
+  background-color: white;
+  padding: 1px 3px;
+  width: 120px;
+  height:15px;
+}
+select::-ms-expand { /* for IE 11 */
+    display: none;
+}
+.posts .index .search button[type='submit']{
+  float: center;
+  color: #714d4d;
+  padding: 2px;
+  margin-left: 2px;
 }
