@@ -1,57 +1,60 @@
 <!DOCTYPE html>
 <html>
- <head>
+
+<head>
   <% include ../partials/head %>
- </head>
- <body>
+</head>
+
+<body>
   <% include ../partials/nav %>
 
   <div class="container upload user-show">
     <div class="buttons">
       <a class="btn btn-default" href="/">Home</a>
-      <% if(isAuthenticated && currentUser.id == user.id){ %> <!-- 1 -->
-       <a class="btn btn-default" href="javascript:history.back()">Back</a>
+      <% if(isAuthenticated && currentUser.id == user.id){ %>
+      <!-- 1 -->
+      <a class="btn btn-default" href="javascript:history.back()">Back</a>
       <% } %>
-     </div>
+    </div>
 
-     <table class="table table-striped posts">
+    <table class="table table-striped posts">
       <thead>
-          <tr>
-              <th class="number">#</th>
-              <th class="txhash">File name</th>
-              <!-- <th class="date">Date</th> -->
-          </tr>
+        <tr>
+          <th class="number">#</th>
+          <th class="txhash">File name</th>
+          <!-- <th class="date">Date</th> -->
+        </tr>
       </thead>
       <tbody>
-          <% if(filelist == null || filelist.length == 0){ %>
-          <tr>
-              <td class="noData" colspan=100> There is no file to show  </td>
-          </tr>
-          <% } %>
+        <% if(filelist == null || filelist.length == 0){ %>
+        <tr>
+          <td class="noData" colspan=100> There is no file to show </td>
+        </tr>
+        <% } %>
 
 
-          <% filelist.forEach(function(element, index, File) { %>
-          <tr>
-              <td class="number">
-                  <div class="ellipsis">
-                          <%= length - index %>
-                  </div>
-              </td>
+        <% filelist.forEach(function(element, index, File) { %>
+        <tr>
+          <td class="number">
+            <div class="ellipsis">
+              <%= length - index %>
+            </div>
+          </td>
 
-              <td class="txhash">
-                  <a href="../../static/<%= user.username %>/<%= element %>" download>
-                    <div class="ellipsis"><%= element %></div>
-                  </a>
-              </td>
+          <td class="txhash">
+            <a href="../../static/<%= user.username %>/<%= element %>" download>
+              <div class="ellipsis"><%= element %></div>
+            </a>
+          </td>
 
-              <!-- <td class="date">
+          <!-- <td class="date">
                   <%= element.createdDate %>
               </td> -->
-          </tr>
-          <% }) %>
+        </tr>
+        <% }) %>
       </tbody>
-  </table>
-   
+    </table>
+
     <!-- </form>
    <form class="user-form form-horizontal" action="/uploads" method="post">
     <div class="contentBox">
@@ -73,12 +76,13 @@
     </div>
    </form> -->
 
-   <form class="buttons" method='post' enctype="multipart/form-data">
-    <div class="upload">
-    <input class='btn btn-default' type='file' style="float:left" name='userfile'>
-    <input class="btn btn-default" type='submit' style="float:right">
-  </div>
+    <form class="buttons" method='post' enctype="multipart/form-data">
+      <div class="upload">
+        <input class='btn btn-default' type='file' style="float:left" name='userfile'>
+        <input class="btn btn-default" type='submit' style="float:right">
+      </div>
     </form>
   </div> <!-- container end -->
- </body>
+</body>
+
 </html>

@@ -74,26 +74,33 @@
             <% } %>
             <%}%>
         </ul>
-  </div> <!-- container end -->
-  <div class="search">
+</div> <!-- container end -->
+<div class="float">
         <div class="search float_right">
-          <form class="checkValidation" action="/uploads/<%= user %>/fileinfo/" id="search">
-            <select name="searchType">
-              <% var select %>
-            <option value="uploadername,originalname" <%= search.searchType=="title,body"?select="selected":"" %>>
-                업로더+파일명</option>
-            <option value="uploadername" <%= search.searchType=="title"?select="selected":"" %>>업로더</option>
-            <option value="originalname" <%= search.searchType=="body"?select="selected":"" %>>파일명</option>
-            </select>
-            <input class="cvMinLength" cvMinLength="3" cvMinLenErrTo="#searchError"
-                cvMinLenErrMsg="It should be at least 3 characters" type="text" name="searchText"
-                value="<%= select?search.searchText:"" %>">
-            <button type="submit">search</button>
-            <div class="message" id="searchError"></div>
-            </form>
-    </div>
-    </div>
-    </div>
+            <form class="checkValidation" action="/uploads/<%= user %>/fileinfo/" id="search">
+                <select name="searchType">
+                    <% var select %>
+                    <option value="uploadername,originalname" <%= search.searchType=="title,body"?select="selected":"" %>>
+                        업로더+파일명</option>
+                    <option value="uploadername" <%= search.searchType=="title"?select="selected":"" %>>업로더</option>
+                    <option value="originalname" <%= search.searchType=="body"?select="selected":"" %>>파일명</option>
+                </select>
+                    
+                <input class="cvMinLength" cvMinLength="3" cvMinLenErrTo="#searchError"
+                    cvMinLenErrMsg="It should be at least 3 characters" type="text" name="searchText"
+                    value="<%= select?search.searchText:"" %>">
+                <button type="submit">search</button>
+                <div class="message" id="searchError"></div>
+                </form>
+    
+                <form class="buttons" method='post' action="/uploads/<%= user %>/fileinfo/" enctype="multipart/form-data">
+                    <div class="upload">
+                        <input class='btn btn-default' type='file' style="float:left" name='verify'>
+                        <input class="btn btn-default" type='submit' style="float:right">
+                    </div>
+                </form>
+        </div>
+        </div>
 </body>
 
 </html>

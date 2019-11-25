@@ -427,23 +427,11 @@ form .form-group-wallet{
   float: center;
   display: inline;
 }
-
-.floats:after{
-  float: center;
-  content: "";
-  display: block;
-  clear: both;
-  height: 0;
-  line-height: 0;
-  text-align: center;
-}
 .posts .index .search{
-  float: center;
   height:40px;
-  text-align: center;
 }
 .posts .index .search select{
-  float: center;
+  float: left;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -456,10 +444,9 @@ form .form-group-wallet{
 }
 .posts .index .search select::after{
   content: "v";
-  text-align: center;
 }
 .posts .index .search input[type='text']{
-  float: center;
+  float: left;
   margin-left: 2px;
   border: 1px solid #ccc;
   border-radius: 0;
@@ -471,9 +458,18 @@ form .form-group-wallet{
 select::-ms-expand { /* for IE 11 */
     display: none;
 }
-.posts .index .search button[type='submit']{
-  float: center;
+.posts .index .search button{
+  float: left;
   color: #714d4d;
   padding: 2px;
   margin-left: 2px;
+}
+
+.float_left{
+  float:left;
+  margin-right:10px;
+}
+.float_right{
+  float:right;
+  margin-left:10px;
 }

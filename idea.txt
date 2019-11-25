@@ -25,5 +25,3 @@ https://expressjs.com/ko/starter/static-files.html
 
 12. blockchain thing. on this page with contract
 racio and safety value.
-
-faucet https://teth.bitaps.com/

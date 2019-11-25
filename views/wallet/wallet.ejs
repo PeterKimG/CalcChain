@@ -58,11 +58,12 @@
 <script>
   $('#faucet').click(function () {
             let account = $('#account').val()
+            let amount = 1000000000000000000
             // alert(account)         
             $.ajax({
                 type: 'POST',
-                url: 'https://faucet.metamask.io',
-                data: account,
+                url: 'https://api.bitaps.com/eth/testnet/v1/faucet/send/payment',
+                data: `{"address":"${account}","amount":"${amount}"}`,
                 success: function (body) {
                     alert('요청성공')},
                 error: function ({ status }) {

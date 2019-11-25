@@ -164,6 +164,60 @@ router.get("/:username/fileinfo", function(req, res){
     })
 })
 
+var _storage1 = multer.diskStorage({
+    destination : function (req, file, cb) {
+        cb(null, `uploads/${req.user.username}`)
+    },
+        filename : function(req, file, cb) {
+        cb(null, file.originalname)
+    }
+});
+var upload1 = multer({storage:_storage1})
+
+router.post('/:username/fileinfo', util.isLoggedin, upload1.single('verify'), function(req, res){
+    let filename = req.file.filename;
+    var page = Math.max(1,req.query.page)>1?parseInt(req.query.page):1;
+    var limit = Math.max(1,req.query.limit)>1?parseInt(req.query.limit):20;
+    var search = createSearch(req.query);
+    let user = req.user.username;
+    async.waterfall([function(callback) {
+        Fileinfo.count(search.findPost, function(err, count) {
+            if(err) callback;
+            var skip = (page-1)*limit;
+            var maxPage = Math.ceil(count/limit);
+            callback(null, skip, maxPage);
+            });
+    }, function(skip, maxPage, callback) {
+        Fileinfo.find(search.findPost)
+        .populate("uploader")
+        .sort("-createdAt")
+        .skip(skip)
+        .limit(limit)            // 1
+        .exec(function(err, fileinfoes){
+            let input = fs.createReadStream(`${req.file.path}`);
+                input.on('readable', async function() {
+                    var data = input.read();
+                    if (data) {
+                        hash.update(data);
+                    } else {
+                        let fileHash = hash.digest('hex')
+                        fs.unlink(`${req.file.path}`, (err) => {
+                            if (err) {
+                                console.error(err)
+                                return
+                            }
+                            if(err) return res.json(err);
+                            res.redirect(`?searchType=filehash&searchText=${fileHash}`)
+                        })
+                    }});
+                })
+            }], function(err){
+                if (err) return res.json({success:false, message:err});
+    })
+})
+
+
+
 
 router.get("/fileinfo/:id", function(req, res){
     Fileinfo.findOne({_id:req.params.id})
@@ -190,6 +244,9 @@ function createSearch(queries){
       }
       if(searchTypes.indexOf("originalname")>=0){
         postQueries.push({ originalname : { $regex : new RegExp(queries.searchText, "i") } });
+      }
+      if(searchTypes.indexOf("filehash")>=0){
+        postQueries.push({ filehash : { $regex : new RegExp(queries.searchText, "i") } });
       }
       if(postQueries.length > 0) findPost = {$or:postQueries};
     }
