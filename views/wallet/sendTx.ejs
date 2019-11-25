@@ -21,16 +21,16 @@
 
     <form class="user-form form-horizontal" action="/wallet/<%= wallet.owner %>/sendTx" method="post">
       <div class="contentBox">
-        <h3 class="contentBoxTop"><%= user.username %> account</h3>
+        <h3 class="contentBoxTop"><%= user.username %> 계좌의 송금정보</h3>
         <fieldset>
           <div class="form-group">
-            <label for="account" class="col-sm-3">Account</label>
+            <label for="account" class="col-sm-3">사용자 계좌</label>
             <div class="col-sm-9">
               <input class="form-control" type="text" id="account" name="account" value="<%= wallet.address %>"
                 readonly>
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" style="display:none">
             <label for="privateKey" class="col-sm-3">privateKey</label>
             <div class="col-sm-9">
               <input class="form-control" type="text" id="privateKey" name="privateKey" value="<%= wallet.privateKey %>"
@@ -39,49 +39,50 @@
           </div>
         </fieldset>
         <fieldset>
-          <div class="form-group">
+          <div class="form-group" style="display:none">
             <label for="account" class="col-sm-3">Account from</label>
             <div class="col-sm-9">
               <input class="form-control" type="text" id="fromAcc" name="fromAcc" value="<%= wallet.address %>">
-              <p>default value is your primary account</p>
+              <p>기본값은 당신의 계좌입니다.</p>
             </div>
           </div>
           <div class="form-group">
-            <label for="privateKey" class="col-sm-3">Account to</label>
+            <label for="privateKey" class="col-sm-3">송금 계좌</label>
             <div class="col-sm-9">
               <input class="form-control" type="text" id="toAcc" name="toAcc" value="<%= myAccount %>">
-              <p>default value is administrator's</p>
+              <p>기본값은 제작자의 계좌입니다.</p>
             </div>
           </div>
           <div class="form-group">
-            <label for="privateKey" class="col-sm-3">Amount to send</label>
+            <label for="privateKey" class="col-sm-3">송금 액</label>
             <div class="col-sm-9">
               <input class="form-control" type="text" id="amount" name="amount" placeholder="type either">
             </div>
           </div>
           <div class="form-group">
-            <label for="privateKey" class="col-sm-3">Message data</label>
+            <label for="privateKey" class="col-sm-3">남기실 메세지</label>
             <div class="col-sm-9">
               <input class="form-control" type="text" id="data" name="data" placeholder="type message you want to send">
             </div>
           </div>
           <div class="form-group">
-            <label for="privateKey" class="col-sm-3">privateKey pass</label>
+            <label for="privateKey" class="col-sm-3">개인키 비밀번호</label>
             <div class="col-sm-9">
               <input class="form-control" type="password" id="passForKey" name="passForKey" placeholder="type your password for privateKey">
             </div>
           </div> 
+          <p>*아래의 파일선택에서 처음 만드신 개인키 파일을 선택하신 후 등록 버튼을 누른후 전송해 주세요.</p>
           <div class="form-group" style="display:none">
               <input type="text" id="editor" name="jsonKey">
            </div>
             
           <form class="buttons" method='post' enctype="multipart/form-data">
             <input class='btn btn-default' type='file' style="float:left" id='fileinput'/>
-            <input class="btn btn-default" type='button' id='btnLoad' value='Import' onclick='handleFileSelect();'>
+            <input class="btn btn-default" type='button' id='btnLoad' value='등록' onclick='handleFileSelect();'>
             <!-- <div id="editor"></div> -->
             <!-- <div id="jsonKey"></div> -->
             <div class="buttons submit-container">
-              <button type="submit" class="btn btn-default" style="float:right">Send</button>
+              <button type="submit" class="btn btn-default" style="float:right">전송</button>
             </div>
           </form>
 

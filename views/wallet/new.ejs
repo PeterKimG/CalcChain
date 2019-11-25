@@ -11,10 +11,10 @@
   <div class="container user user-show">
     <form class="user-form form-horizontal" action="/wallet/" method="post">
       <div class="contentBox2">
-        <h3 class="contentBoxTop"> account</h3>
+        <h3 class="contentBoxTop"> 계좌 생성</h3>
         <fieldset>
           <div class="form-group-wallet <%= (errors.address)?'has-error':'' %>">
-            <label for="address" class="col-sm-6">New address</label>
+            <label for="address" class="col-sm-6">새 계좌 정보</label>
             <div class="col-sm-9">
               <input class="form-control-wallet" type="text" id="address" name="address" value="<%= address %>"
                 value="<%= wallet.address %>" readonly>
@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="form-group-wallet <%= (errors.privateKey)?'has-error':'' %>">
-            <label for="privateKey" class="col-sm-6">New privateKey</label>
+            <label for="privateKey" class="col-sm-6">새 개인키</label>
             <div class="col-sm-9">
               <input class="form-control-wallet" type="text" id="privateKey" name="privateKey" value="<%= privateKey %>"
                 value="<%= wallet.privateKey %>" readonly>
@@ -34,19 +34,22 @@
             </div>
           </div>
           <div class="form-group-wallet <%= (errors.privateKey)?'has-error':'' %>">
-            <label for="privateKey" class="col-sm-6">Password for PrivateKey</label>
+            <label for="privateKey" class="col-sm-6">개인키 비밀번호</label>
             <div class="col-sm-9">
-              <input class="form-control-wallet" type="text" id="passForKey" name="passForKey" placeholder="Please enter password">
+              <input class="form-control-wallet" type="text" id="passForKey" name="passForKey" placeholder="비밀번호를 입력해주세요">
               <span class="help-block"></span>
               </div>
           </div>
         </fieldset>
         <br>
-        New address is created on blockchain server side. Please save your address and key to click button down below. </br>
-        And go to check it at your wallet page.
+        <p>새 계좌와 개인키가 생성되었습니다. 계좌번호는 서버에 저장되며, 개인키를 서버에 저장하지 않기 위해 사용자의 컴퓨터에 저장합니다.</p>
+        <p>아래 버튼을 누르면 기본 다운로드 경로로 사용자의 개인키가 암호화되어 저장됩니다.</p>
+        <p>앞으로 계좌의 이용을 위해 개인키 비밀번호를 잊지 않도록 주의해 주세요.</p>
+        <p>저장 버튼을 누른 후 10초뒤 자동으로 페이지가 이동됩니다.</p>
+
       </div>
       <div class="buttons submit-container">
-        <button type="submit" formmethod="POST" class="btn btn-default">Save and export PrivateKey</button>
+        <button type="submit" formmethod="POST" class="btn btn-default">개인키 및 계좌정보 저장</button>
       </div>
       <% if(errors.unhandled){ %>
       <div class="alert alert-danger">

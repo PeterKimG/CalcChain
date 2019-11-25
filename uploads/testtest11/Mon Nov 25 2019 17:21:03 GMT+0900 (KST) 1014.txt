@@ -1,0 +1,77 @@
+ko.reactjs.org/docs
+
+github.com/bitrustkr/CLT-Explorer-Web
+
+
+ejs, jade -> template
+vue, react -> ui framework
+
+컴포넌트에서 관리하는 상태.
+전체에서 관리하는 상태: react 관련 context api, 'redux', mobx
+
+es6 문법을 잘 알아야 한다.
+
+class에 대해 알아보자.
+
+서버 > express, django, spring
+클라이언트 > app, web
+DB
+
+
+클라이언트 -> 서버 (request)  (express, django, spring) - request할때 사용하는 라이브러리 npm axios
+(patch라는 내장 library도 있지만)
+
+서버 -> DB (조회) (data 조회, 수정, 삭제) db에 query를 날림
+
+DB -> 서버 (반환)
+
+서버(반환된 data) -> 클라이언트
+
+docker mysql
+docker mongodb
+(pjt blog)
+
+orm object reation mapping
+orm library: sequelize
+
+git link, 포트폴리오 사이트, 
+
+ctrl shift r = 캐쉬삭제+refresh
+
+.nojekyll
+
+jekyll 이라는 블로그를 만들어주는 tool이 있고, 그 경로로 잡으면 안뜨니까
+
+bootstrap cdn.
+
+
+svelte - boilertemplate ?
+sphinx - rst - format library
+
+
+okky.kr/article/536944
+
+pjt3591oo.github.io/sequelizejs_translate
+
+
+datetime formmating 
+
+몽고디비이 스키마 밸리데이터에서 갯수지정
+
+
+db.collection.count()
+
+https://docs.mongodb.com/manual/reference/method/db.collection.count/
+
+이걸로해서 갯수확인해서 boolean 해서 if문 해서 가능 혹은 error
+
+https://sequelize.org/v5/manual/models-definition.html#validations
+
+validator 구분 모델
+
+data-privateKey or data-id''
+
+
+
+
+bip39 mnemonic generate 

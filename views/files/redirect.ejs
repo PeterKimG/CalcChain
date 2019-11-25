@@ -20,16 +20,15 @@
     </form>
    <form class="user-form form-horizontal" action="/uploads" method="post">
     <div class="contentBox">
-     <h3 class="contentBoxTop"><%= user.username %>'s File Managing</h3>
+     <h3 class="contentBoxTop"><%= user.username %>님의 파일 처리 중...</h3>
      <fieldset>
        <div class="col-sm-9">
-        <h3>Your file is saved as "<%= filename %>" in database server.</h3> <br/>
-        <h3>The original filename was "<%= originalname %>"</h3> <br/>
-        <h3>Uplodad file's type is "<%= filetype %>"</h3><br>
-        <h3>Uplodad file's hash value is "<%= fileHash %>"</h3><br>
-        <h3>Transaction hash is "<%= result4 %>"</h3><br>
-        <h3>The data (fileHash value) input in Transaction is "<%= fileHash %>"</h3><br>
-        <h3>file upload is done, redirect in 10 sec...</h3>
+        <h3>업로드된 파일은 "<%= filename %>" 파일명으로 서버에 저장됩니다.</h3> <br/>
+        <h3>원 파일명은 "<%= originalname %>" 입니다.</h3> <br/>
+        <h3>업로드된 파일의 타입은 "<%= filetype %>" 입니다.</h3><br>
+        <h3>파일의 해쉬값은 "<%= fileHash %>" 입니다.</h3><br>
+        <h3>전송된 트랜잭션의 해쉬값은 "<%= result4 %>" 입니다.</h3><br>
+        <h3>전송이 완료되었습니다. 10초뒤 자동으로 이동합니다.</h3>
         </div>
      </fieldset>
     </div>

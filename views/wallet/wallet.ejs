@@ -19,24 +19,24 @@
   
       <form class="user-form form-horizontal" action="/users" method="post">
         <div class="contentBox">
-          <h3 class="contentBoxTop"><%= user.username %> account</h3>
+          <h3 class="contentBoxTop"><%= user.username %>의 계좌정보</h3>
           <fieldset>
             <div class="form-group">
-              <label for="account" class="col-sm-3">Account</label>
+              <label for="account" class="col-sm-3">계좌</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" id="account" name="account" 
                 value="<%= wallet.address %>" readonly> 
               </div>
             </div>
             <div class="form-group">
-                <label for="account" class="col-sm-3">Balance</label>
+                <label for="account" class="col-sm-3">잔액</label>
                 <div class="col-sm-9">
                   <input class="form-control" type="text" id="balance" name="balance" 
                   value="<%= balanceEth %> Ether" disabled> 
                 </div>
               </div>
 
-            <div class="form-group">
+            <div class="form-group" style="display:none">
               <label for="privateKey" class="col-sm-3">privateKey</label>
               <div class="col-sm-9">
                 <input class="form-control" type="text" id="privateKey" name="privateKey"
@@ -47,11 +47,11 @@
         </div>
       </form>
       <div class="buttons col-sm-12"> 
-        <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">New Account</a>
-        <a class="btn btn-primary" data-clipboard-target="#account" style="display: none;">Copy address</a>
-        <a class="btn btn-primary" id="faucet">Get faucet</a>
-        <a class="btn btn-primary" href="/wallet/<%= user.username %>/sendTx">Send Tx</a>
-        <a class="btn btn-primary" href="/wallet/<%= user.username %>/history">Tx history</a>
+        <a class="btn btn-primary" href="/wallet/<%= user.username %>/new">새 계좌 만들기</a>
+        <a class="btn btn-primary" data-clipboard-target="#account" style="display: none;">주소 복사</a>
+        <a class="btn btn-primary" id="faucet">포싯 얻기</a>
+        <a class="btn btn-primary" href="/wallet/<%= user.username %>/sendTx">Tx 전송</a>
+        <a class="btn btn-primary" href="/wallet/<%= user.username %>/history">Tx 히스토리</a>
       </div> <!-- container end -->
 
 </body>

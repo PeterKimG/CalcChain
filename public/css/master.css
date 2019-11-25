@@ -110,7 +110,8 @@ form .form-group-wallet{
 }
 /* nav style*/
 .navbar-default .navbar-brand {
-  color: #1cad1c;
+  color: #535353;
+  font-weight: bold;
   font-size: 30px;
 }
 
@@ -230,11 +231,23 @@ form .form-group-wallet{
 
 /* wallet style */
 .upload {
-  max-width: 400px;
+  max-width: 840px;
   font-family: 'Open Sans', sans-serif;
   font-size: 12px;
 }
-
+.upload .contentBox {
+  max-width: 1000px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+}
+.upload .posts .number {
+  text-align: center;
+  width: 40px;
+}
+.upload .posts .txhash {
+  text-align: center;
+  width: 800px;
+}
 /* clipboard.js style */
 
 .tooltipped {

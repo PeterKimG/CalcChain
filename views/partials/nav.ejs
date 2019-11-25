@@ -6,24 +6,24 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <div class="navbar-brand">accountant chain</div>
+      <div class="navbar-brand">파일 위변조 확인</div>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
-        <li><a href="/posts">board</a></li>
+        <li><a href="/posts">게시판</a></li>
       </ul>
     </ul>
     <ul class="nav navbar-nav navbar-right"> <!-- 1 -->
       <% if(isAuthenticated){ %>
-        <li><a href="/users/<%= currentUser.username %>">My Info</a></li>
+        <li><a href="/users/<%= currentUser.username %>">내 정보</a></li>
         <!-- <li><a href="/users/account/<%= currentUser.username %>">My Account</a></li> -->
-        <li><a href="/wallet/<%= currentUser.username %>">Wallet</a></li>
-        <li><a href="/uploads/<%= currentUser.username %>">File upload</a></li>
-        <li><a href="/uploads/<%= currentUser.username %>/fileinfo">File Tx</a></li>
+        <li><a href="/wallet/<%= currentUser.username %>">지갑</a></li>
+        <li><a href="/uploads/<%= currentUser.username %>">파일 업로드</a></li>
+        <li><a href="/uploads/<%= currentUser.username %>/fileinfo">파일 확인</a></li>
         <li><a href="/logout">Logout</a></li>
        <% } else { %>
-        <li><a href="/users/new">Sign Up</a></li>
+        <li><a href="/users/new">회원가입</a></li>
         <li><a href="/login">Login</a></li>
        <% } %>
     </ul>

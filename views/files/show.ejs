@@ -33,12 +33,10 @@
      </div> <!-- col end-->
      <div class="col-sm-8 col-sm-pull-4">
         <ul>
-            <li><div class="post-body">Original file name is "<%= fileinfo.originalname %>"</div></li>
-            <li><div class="post-body">Saved filename is "<%= fileinfo.filename %>"</div></li>
-            <li><div class="post-body">Extracted file hash value is "<%= fileinfo.filehash %>"</div></li>
-            <li><div class="post-body">Inputed file hash value is "<%= fileinfo.filehash %>" from the Tx</div></li>
-            <li><div class="post-body">Trasaction hash value sended with file hash value"
-                <a href="https://ropsten.etherscan.io/tx/<%= fileinfo.Txhash %>"><%= fileinfo.Txhash %>"</div></li></a>
+            <li><div class="post-body">원 파일명은 "<%= fileinfo.originalname %>" 입니다.</div></li>
+            <li><div class="post-body">저장된 파일명은 "<%= fileinfo.filename %>" 입니다.</div></li>
+            <li><div class="post-body">추출되고 저장된 해쉬값은 "<%= fileinfo.filehash %>" 입니다.</div></li>
+            <li><div class="post-body">파일 해쉬를 전송한 트랜잭션은 "<a href="https://ropsten.etherscan.io/tx/<%= fileinfo.Txhash %>">여기"</a>서 확인하실 수 있습니다.</div></li>
         </ul>
      </div> <!-- col end-->
     </div> <!-- row end -->
