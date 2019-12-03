@@ -22,14 +22,17 @@ $ node index.js
 ```
 
 2. ##### 지갑 페이지
-   (./public/images/1.PNG)
+
+![wallet](./public/images/1.PNG)
+
+
 
 3. ##### 파일 업로드 페이지
 
-    (./public/images/2.PNG)
+![upload](./public/images/2.PNG)
 
 
 
 4. ##### 파일 조회 페이지
 
-(./public/images/3.PNG)
+![check](./public/images/3.PNG)
