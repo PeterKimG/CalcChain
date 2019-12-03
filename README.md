@@ -13,7 +13,7 @@
 
 ### 소개
 
-1. ##### 사용
+1. #### 사용
 ```
 $ git clone https://github.com/PeterKimG/calcchain.git
 $ cd calcchain
@@ -21,7 +21,7 @@ $ npm i
 $ node index.js
 ```
 
-2. ##### 지갑 페이지
+2. #### 지갑 페이지
 
 ![wallet](./public/images/f1.png)
 
@@ -29,14 +29,14 @@ $ node index.js
 - 후에 json file 로 승인후 송금 실행 가능
 
 
-3. ##### 파일 업로드 페이지
+3. #### 파일 업로드 페이지
 
 ![upload](./public/images/f2.png)
 
 - 파일 업로드 시에 서버에 저장과 동시에 해쉬 값(SHA-256) 추출 후 transaction 에 담아 전송.
 - list up
 
-4. ##### 파일 조회 페이지
+4. #### 파일 조회 페이지
 
 ![check](./public/images/f3.png)
 
