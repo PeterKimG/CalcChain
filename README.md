@@ -23,16 +23,16 @@ $ node index.js
 
 2. ##### 지갑 페이지
 
-![wallet](./public/images/f1.PNG)
+![wallet](./public/images/f1.png)
 
 
 
 3. ##### 파일 업로드 페이지
 
-![upload](./public/images/f2.PNG)
+![upload](./public/images/f2.png)
 
 
 
 4. ##### 파일 조회 페이지
 
-![check](./public/images/f3.PNG)
+![check](./public/images/f3.png)
